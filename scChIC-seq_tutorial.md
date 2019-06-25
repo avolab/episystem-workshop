@@ -31,6 +31,7 @@ software needed:
     - macs2
     - deeptools
     - bowtie2
+    - bwa
     
     
     
@@ -134,22 +135,29 @@ We obtain sequences corresponding to a portion of DNA linked to the histone mark
     answer_3="Wang et al. (2018) did ChIP-seq on mouse. So we should use the mouse reference genome. We will use mm10 (the latest build)"
 %}
 
-## Running Bowtie2 or BWA
+## Running BWA
 
 > ### Hands-on: Mapping
 >
-> 1. Run bwa or bowtie2 on the fastq files, using an mm10 reference genome. 
+> 1. Run bwa on the fastq files, using an mm10 reference genome.
+> TODO Add reference index files into the server. 
+> 
+> `bwa mem -t 1 $ref ${f}_R1.fastq.gz ${f}__R2.fastq.gz | samtools view -b - > $outf`
 >
 > 2. Inspect the mapping stats
 >
 >    > ### Questions
 >    >
+>.   > How do you view the aligned reads?
+>.   > How do we see the length of each chromosome used in the mapping? Hint: see header in samtools
 >    > How many reads where mapped? Uniquely or several times?
 >    >
 
-The output of Bowtie2 or BWA is a BAM file (binary of Sequence Alignment/Map).
+The output of BWA is a BAM file (binary of Sequence Alignment/Map).
 
 ## Inspection of a BAM file
+
+TODO Add more things to inspect. 
 
 
 ## Visualization using a Genome Browser
