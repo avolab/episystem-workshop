@@ -45,7 +45,7 @@ In mammals, the X chromosome inactivation (XCI) balances the dosage of X-linked 
 
 Binding certain proteins to each of the eight histone proteins may modify the chromatin structure and may result in changes in transcription level. For example, the H3K4me3 is adding 3 methyl-group of the 4th Lysine in the histone 3 amino-acid. This modification is known to activate the transcription on nearby genes by opening the chromatin. The H3K27me3 on the other hand is inactivating the transcription of the nearby genes:
 
-![Fadloun et al, 2013](../../images/formation_of_super-structures_on_xi/histone_modifications.jpg "Source: Fadloun et al, 2013")
+![Fadloun et al, 2013](images/histone_modifications.jpg "Source: Fadloun et al, 2013")
 
 More H3K27me3 and less H3K4me3 on the Xi could explain a lower expression of the genes there.
 
@@ -58,7 +58,7 @@ The structural-maintenance-of-chromosomes hinge domain containing 1 (SMCHD1) has
 Their idea was to identify the differences which could be observed between the Xi and activated X chromosome, on both wild-type and SMCHD1 gene knockdown samples to study the SMCHD1 effect.
 In different experiments, they targeted histones with H3K27me3 or H3K4me3 and CTCF using ChIP-seq experiments.
 
-![ChIP-seq workflow](../../images/formation_of_super-structures_on_xi/Chromatin_immunoprecipitation_sequencing.jpg "Source: http://e.biohackers.net/ChIP-seq")
+![ChIP-seq workflow](images/Chromatin_immunoprecipitation_sequencing.jpg "Source: http://e.biohackers.net/ChIP-seq")
 
 They obtained sequences corresponding to a portion of DNA linked to histones with H3K27me3, H3K4me3 or CTCF. Using this information, they could identify if there are differences in the H3K27me3, H3K4me3 and CTCF between the X (active or inactive) chromosomes and the potentially influenced genes.
 
@@ -72,6 +72,16 @@ In the upcoming tutorial, we will only use the wild type data from {% cite Wang2
     In 'input' samples, the same treatment as the ChIP-seq samples was done except for the immunoprecipitation step.
     They are also used along with the 'ChIP-seq' samples to identify the potential sequencing bias and help for differential analysis.
 
+### Tools
+ The following tools are required to run this workshop:
+  - fastqc
+  - TrimGalore/Cutadapt
+  - Bowtie2
+  - samtools
+  - deeptools
+  - bedtools
+  - MACS2
+  - IGV (local installation)
 
 > ### Agenda
 >
@@ -139,33 +149,33 @@ Sequence quality control is therefore an essential first step in your analysis. 
 >    > >     - There is 50,000 sequences, all of 51 bp
 >    > >     - The "Per base sequence quality" is not decreasing too much at the end of the sequences
 >    > >
->    > >        ![Per base sequence quality for read1](../../images/formation_of_super-structures_on_xi/read1_per_base_sequence_quality.png "Per base sequence quality")
+>    > >        ![Per base sequence quality for read1](images/read1_per_base_sequence_quality.png "Per base sequence quality")
 >    > >
 >    > >     - The mean quality score over the reads is quite high
 >    > >
->    > >        ![Per sequence quality scores for read1](../../images/formation_of_super-structures_on_xi/read1_per_sequence_quality_scores.png "Per sequence quality scores")
+>    > >        ![Per sequence quality scores for read1](images/read1_per_sequence_quality_scores.png "Per sequence quality scores")
 >    > >
 >    > >     - Homogeneous percentage of the bases
 >    > >
->    > >        ![Per base sequence content for read1](../../images/formation_of_super-structures_on_xi/read1_per base_sequence_content.png "Per base sequence content")
+>    > >        ![Per base sequence content for read1](images/read1_per base_sequence_content.png "Per base sequence content")
 >    > >
 >    > >     - No N in the reads
 >    > >
->    > >        ![Per base N content for read1](../../images/formation_of_super-structures_on_xi/read1_per_base_n_content.png "Per base N content")
+>    > >        ![Per base N content for read1](images/read1_per_base_n_content.png "Per base N content")
 >    > >
 >    > >     - No duplicated sequences
 >    > >
->    > >        ![Sequence Duplication Levels for read1](../../images/formation_of_super-structures_on_xi/read1_sequence_duplication_levels.png "Sequence Duplication Levels")
+>    > >        ![Sequence Duplication Levels for read1](images/read1_sequence_duplication_levels.png "Sequence Duplication Levels")
 >    > >
 >    > >     - No more known adapters
 >    > >
->    > >        ![Adapter Content for read1](../../images/formation_of_super-structures_on_xi/read1_adapter_content.png "Adapter Content")
+>    > >        ![Adapter Content for read1](images/read1_adapter_content.png "Adapter Content")
 >    > >
 >    > > 2. The reads in `wt_H3K4me3_read2` are a bit worse:
 >    > >
 >    > >     - The "Per base sequence quality" is decreasing more at the end of the sequences, but it stays correct
 >    > >
->    > >        ![Per base sequence quality for read2](../../images/formation_of_super-structures_on_xi/read1_per_base_sequence_quality.png "Per base sequence quality")
+>    > >        ![Per base sequence quality for read2](images/read1_per_base_sequence_quality.png "Per base sequence quality")
 >    > >
 >    > >     - The sequence `NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN` is over represented
 >    > >
@@ -326,7 +336,7 @@ Since in this tutorial we are interested in assessing H3K4me3, H3K27me3 and CTCF
 
 > ### {% icon question %} Questions
 >
-> ![Output for plotCorrelation with the correlation scores between the 8 samples](../../images/formation_of_super-structures_on_xi/plotCorrelation.png "Correlation scores between the 8 samples")
+> ![Output for plotCorrelation with the correlation scores between the 8 samples](images/plotCorrelation.png "Correlation scores between the 8 samples")
 >
 > How are your samples clustered? Does that correspond to your expectations?
 >
@@ -364,7 +374,7 @@ An ideal 'input' with perfect uniform distribution of reads along the genome (i.
 
 > ### {% icon question %} Questions
 >
-> ![Output for plotFingerprint with the fingerprint plot to estimate the IP strength](../../images/formation_of_super-structures_on_xi/plotFingerPrint.png "Fingerprint plot for the first replicates to estimate the IP strength")
+> ![Output for plotFingerprint with the fingerprint plot to estimate the IP strength](images/plotFingerPrint.png "Fingerprint plot for the first replicates to estimate the IP strength")
 >
 > What do you think about the quality of the IP for this experiment?
 >
@@ -457,7 +467,7 @@ We are using **bamCoverage** {% icon tool %}. Given a BAM file, this tool genera
 >
 > If you zoom to `chrX:151,385,260-152,426,526`, what do you observe?
 >
-> ![Output of bamCoverage](../../images/formation_of_super-structures_on_xi/bamcoverage_igv.png "bamCoverage for wt_H3K4me3_rep1 and wt_input_rep1 on chrX:151,385,260-152,426,526")
+> ![Output of bamCoverage](images/bamcoverage_igv.png "bamCoverage for wt_H3K4me3_rep1 and wt_input_rep1 on chrX:151,385,260-152,426,526")
 >
 > > ### {% icon solution %} Solution
 > > The track with the coverage for the input (`wt_input_rep1`) seems quite homogeneous. On the other hand, for `wt_H3K4me3_rep1`, we can observe some clear peaks at the beginning of the genes.
@@ -500,7 +510,7 @@ To extract only the information induced by the immunoprecipitation, we normalize
 >
 > How could you interpret the new track if you zoom to `chrX:151,385,260-152,426,526`?
 >
-> ![Output of bamCoverage](../../images/formation_of_super-structures_on_xi/bamcompare_igv.png "bamCoverage for wt_H3K4me3_rep1 and wt_input_rep1 on chrX:151,385,260-152,426,526")
+> ![Output of bamCoverage](images/bamcompare_igv.png "bamCoverage for wt_H3K4me3_rep1 and wt_input_rep1 on chrX:151,385,260-152,426,526")
 >
 > > ### {% icon solution %} Solution
 > > The new track is the difference between the first track (`wt_H3K4me3_rep1`) and the second track (`wt_input_rep1`)
@@ -548,7 +558,7 @@ We could see in the ChIP data some enriched regions (peaks). We now would like t
 >
 > 1. How many peaks have been identified in `chrX:151,385,260-152,426,526` based on IGV?
 >
->    ![Output of MACS2](../../images/formation_of_super-structures_on_xi/macs2_igv.png "Peaks for wt_H3K4me3_rep1 and wt_input_rep1 on chrX:151,385,260-152,426,526")
+>    ![Output of MACS2](images/macs2_igv.png "Peaks for wt_H3K4me3_rep1 and wt_input_rep1 on chrX:151,385,260-152,426,526")
 >
 > 2. What are the fold change of the peaks identified in `chrX:151,385,260-152,426,526`? Hint: using the BED file
 > 3. How many peaks have been identified on the full chromosome X? How many peaks have a fold change > 50?
@@ -631,7 +641,7 @@ Optionally, we can also use **plotProfile** {% icon tool %} to create a profile 
 
 It should generate an heatmap similar to:
 
-![Output of plotHeatmap for 2 samples](../../images/formation_of_super-structures_on_xi/peak_heatmap_1.png "Scores around the peaks for wt_H3K4me3_rep1 and wt_input_rep1")
+![Output of plotHeatmap for 2 samples](images/peak_heatmap_1.png "Scores around the peaks for wt_H3K4me3_rep1 and wt_input_rep1")
 
 When we look at this graph, it seems that less but larger peaks are found for `H3K4me3_rep1` and that only few peaks are shared.
 
@@ -692,11 +702,11 @@ So far, we have only analyzed 2 samples, but we can do the same for all the 6 sa
 > 1. How many peaks are found for the different samples?
 > 2. How are the peaks?
 >
->    ![Output of plotHeatmap for all samples](../../images/formation_of_super-structures_on_xi/peak_heatmap_all.png "Scores around the peaks for all samples")
+>    ![Output of plotHeatmap for all samples](images/peak_heatmap_all.png "Scores around the peaks for all samples")
 >
 > 3. How could be interpreted the peaks and read coverage in the `chrX:151,385,260-152,426,526` region?
 >
->    ![Coverage and peaks for the replicate 1](../../images/formation_of_super-structures_on_xi/rep1_igv.png "Coverage and peaks for the replicate 1")
+>    ![Coverage and peaks for the replicate 1](images/rep1_igv.png "Coverage and peaks for the replicate 1")
 >
 > > ### {% icon solution %} Solution
 > > 1. Found peaks (number of lines in **MACS2 callpeak** {% icon tool %} outputs):
@@ -723,6 +733,6 @@ So far, we have only analyzed 2 samples, but we can do the same for all the 6 sa
 
 Along this tutorial, we learn how to extract peaks and coverage information from raw data of ChIP experiments:
 
-![Workflow to extract peaks and coverage information from raw data of ChIP experiments](../../images/formation_of_super-structures_on_xi/tutorial-scheme.png "Workflow to extract peaks and coverage information from raw data of ChIP experiments")
+![Workflow to extract peaks and coverage information from raw data of ChIP experiments](images/tutorial-scheme.png "Workflow to extract peaks and coverage information from raw data of ChIP experiments")
 
 This information can be then related to the biology to answer the original question. We tried then to relate the observed differences of peak and read coverage between H3K27me3 and H3K4me3 to the known biology. We could go even further in the analysis to reproduce the results of the original paper (e.g. by looking at the bivalent genes, identifying the differences between Xa and Xi).
