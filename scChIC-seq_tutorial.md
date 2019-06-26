@@ -28,10 +28,10 @@ contributors:
 software needed:
     - fastqc
     - samtools
-    - macs2
     - deeptools
-    - bowtie2
     - bwa
+    - hiddenDomains
+    - macs2
     
     
     
@@ -160,9 +160,6 @@ The output of BWA is a BAM file (binary of Sequence Alignment/Map).
 TODO Add more things to inspect. 
 
 
-## Visualization using a Genome Browser
-
-
 ## Correlation between samples
 
 We will compare genome-wide correlation of H3K4me3 and H3K4me1 for different cell clusters. 
@@ -218,7 +215,7 @@ chr11   44114099        45269522
 
 # Step 5: Detecting enriched regions (peak calling)
 
-We could see in the ChIP data some enriched regions (peaks). We now would like to call these regions to obtain their coordinates, using **MACS2 callpeak** {% icon tool %}
+We could see in the scChIC-seq data some enriched regions that differ across samples. We now would like to call these regions to obtain their coordinates, using **MACS2 callpeak** {% icon tool %}
 
 > ### {% icon hands_on %} Hands-on: Peak calling
 >
