@@ -65,7 +65,11 @@ In the upcoming tutorial, we will look at H3K4me3 scChIC-seq data from mouse bon
 
 Overview of files provided in this tutorial:
 
-- TODO: Add Sample names here
+- `fastq_full/demultiplexedR${read}_10000rows.fastq.gz` : demultiplexed `fastq` files for quality control checks before mapping.
+- `sorted_bams_filtered/${histone_mark}_cluster_${clstrID}.filtered.bam` : single cell scChIC-seq profiles grouped by clusters. We have already assigned cells to clusters for you, you just have to infer the biological meaning of these clusters (i.e., infer the cell type). We will use these to visualize `bam` files with `IGV`, explore how to calculate number of reads by `MAPQ` quality, and do peak calling.  `bam` files are subset to include only four main regions to reduce file size (defined in `regions/regions_to_filter.txt`).
+- `regions/regions_to_filter.txt` : File containing the four genomic regions that contain signal in the `bam` files. 
+- `sorted_bigwigs/${histone_mark}_cluster_${clstrID}.bw` : `bigwig` files of scChIC-seq profiles, providing genome-wide coverage of scChIC-seq grouped by their clusters (pseudobulk). We will use `bigwig` files to correlate across pseudobulk samples and visualize the on the `IGV`.
+- `chromsizes/chromsizes.${genome}.filt.txt` : size of genomes which are used as input in `hiddenDomains`. 
 
 
 # Step 1: Quality control and treatment of the sequences
@@ -130,7 +134,6 @@ Sequence quality control is therefore an essential first step in your analysis. 
 
 We obtain sequences corresponding to a portion of DNA linked to the histone mark of interest, H3K4me3 in this case. H3K4me3 is associated with active chromatin. It would be interesting to know if there is a difference across cell types.
 
-TODO a pretty image for bwa
 
 ## Running BWA
 
