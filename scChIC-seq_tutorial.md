@@ -121,12 +121,7 @@ Sequence quality control is therefore an essential first step in your analysis. 
 
 We obtain sequences corresponding to a portion of DNA linked to the histone mark of interest, H3K4me3 in this case. H3K4me3 is associated with active chromatin. It would be interesting to know if there is a difference across cell types.
 
-{% include topics/sequence-analysis/tutorials/mapping/mapping_explanation.md
-    to_identify="binding sites"
-    mapper="Bowtie2"
-    mapper_link="http://bowtie-bio.sourceforge.net/bowtie2/index.shtml"
-    answer_3="Wang et al. (2018) did ChIP-seq on mouse. So we should use the mouse reference genome. We will use mm10 (the latest build)"
-%}
+TODO a pretty image for bwa
 
 ## Running BWA
 
