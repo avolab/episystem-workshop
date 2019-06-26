@@ -90,15 +90,33 @@ Sequence quality control is therefore an essential first step in your analysis. 
 >
 >    > ### Questions
 >    >
->    > 1. How is the quality of the reads in `H3K4me3_demultiplexedR1_10000rows.fastq.gz`?
->    > 2. And in `H3K4me3_demultiplexedR2_10000rows.fastq.gz`?
->    > 3. Why do the lengths of the bases differ? Hint: Remember that the `fastq` files have been demultiplexed.
->    > 4. What should we do if the quality of the reads is not good?
->    > 5. What are the most common start sequences for the `fastq` files? How does it differ for `R1` and `R2`?
+>    > 1. How is the quality of the read 1 and read 2? Why do the lengths of the bases differ? Hint: Remember that the `fastq` files have been demultiplexed.
+>    > 2. What are the most common start sequences for the `fastq` files? How does it differ for `R1` and `R2`?
+>    > 3. Have the adapters been trimmed in the demultiplexed `fastq` files?
 >    >
 >    > > ### Solution
 >    > > 1. 
+>    > > Read 1 per base sequence quality. 65 base pairs because the 3 nt UMI and 8 nt cell barcodes were trimmed.
+>    > > ![R1 per base seq qual](images/R1_per_base_content.png)
+>    > > Read 2 per base sequence quality. 76 nt long, no UMIs or barcodes in this read. 
+>    > > ![R2 per base seq qual](images/R2_per_base_content.png)
 >    > > 
+>    > > 2. 
+>    > > Read 1 per base sequence content. First base is likely coming from Illumina adapters. Second base comes from MNase cuts, which has an affinity for "AA/TT" dinucleotides. 
+>    > > ![R1 per base seq content](images/R1_per_base_content.png)
+>    > > Read 2 per base sequence quality (76 nt long, no UMIs or barcodes in this read).
+>    > > ![R2 per base seq content](images/R2_per_base_content.png)
+>    > > 
+>    > > 3. No.
+>    > > ![R1 per base seq content](images/R1_adapter_content.png)
+>    > > Read 2 per base sequence quality (76 nt long, no UMIs or barcodes in this read).
+>    > > ![R2 per base seq content](images/R2_adapter_content.png)
+>    > > 
+
+
+
+
+
 # Step 2: Mapping of the reads
 
 We obtain sequences corresponding to a portion of DNA linked to the histone mark of interest, H3K4me3 in this case. H3K4me3 is associated with active chromatin. It would be interesting to know if there is a difference across cell types.
