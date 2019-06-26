@@ -67,8 +67,8 @@ Let's first assess the quality of the demultiplexed `fastq` files. Demultiplexed
 > 1. Import `demultiplexedR1_10000rows.fastq.gz` and `demultiplexedR2_10000rows.fastq.gz` from [Zenodo](https://zenodo.org/record/1324070) or from the data library (ask your instructor)
 >
 >    ```
->    https://zenodo.org/record/3256371/files/H3K4me3_cluster_3.filtered_R1.fastq
->    https://zenodo.org/record/3256371/files/H3K4me3_cluster_3.filtered_R2.fastq
+>    https://zenodo.org/record/3256650/files/demultiplexedR1_10000rows.fastq.gz
+>    https://zenodo.org/record/3256650/files/demultiplexedR2_10000rows.fastq.gz
 >    ```
 >
 > 2. Rename the files to `H3K4me3_demultiplexedR1_10000rows.fastq.gz` and `H3K4me3_demultiplexedR2_10000rows.fastq.gz`
@@ -141,11 +141,11 @@ TODO a pretty image for bwa
 >    > How many reads where mapped? Uniquely or several times?
 >    >
 
-The output of BWA is a BAM file (binary of Sequence Alignment/Map).
+The output of BWA is a BAM file ([binary of Sequence Alignment/Map](https://en.wikipedia.org/wiki/SAM_%28file_format%29)).
 
 ## Inspection of a BAM file
 
-TODO Add more things to inspect.
+Anna TODO Add more things to inspect.
 
 
 ## Correlation between samples
@@ -163,7 +163,7 @@ Since in this tutorial we are interested in assessing H3K4me3 and H3K4me1 scChIC
 > 2. Rename the files
 > 3. Compare bigwigs using `multiBigwigSummary`
 >    - *"Sample order matters"*: `No`
->       - {% icon param-files %} *"BAM/CRAM file"*: the 8 imported BAM files
+>       - *"BAM/CRAM file"*: the six imported `bigwig` files
 >    - *"Choose computation mode"*: `Bins`
 >       - *"Bin size in bp"*: `100000`
 >
@@ -171,9 +171,9 @@ Since in this tutorial we are interested in assessing H3K4me3 and H3K4me1 scChIC
 >    Using these parameters, the tool will take bins of 100000 bp. For each bin the overlapping reads in each sample will be computed and stored into a matrix.
 >
 > 4. **plotCorrelation** with the following parameters
->    - *"Correlation method"*: `Spearman`
+>    - *"Correlation method"*: `Pearson` or `Spearman` (which do you think is more appropriate here? Check by inspecting the scatterplots)
 >    - Plot `heatmap` or `scatterplot`.
->.   - Plot output in log scale (--log1p)
+>    - Plot output in log scale (--log1p) for visualization. 
 >
 >    
 
@@ -181,10 +181,15 @@ Since in this tutorial we are interested in assessing H3K4me3 and H3K4me1 scChIC
 >
 > From the correlation plot, can you infer which clusters correspond to the same cell type in H3K4me1 and H3K4me3?
 >
+>  ### Solution
+>  1.
+>  We find high correlation for H3K4me3 cluster 3 with H3K4me1 cluster 2, they may be measuring active histones in the same cell type. H3K4me1 cluster 5 and H3K4me1 cluster 5 also show high correlation, suggesting they may also be the same cell type. 
+>  ![pearson_correlation_two_cell_types_two_marks.png](images/pearson_correlation_two_cell_types_two_marks.png)
+>  
 
 # Step 4: Exploring `bam` and `bigwig` files on the IGV browser
 
-The bam file contains only reads falling in specific genomic regions, in order to reduce the file size.
+The `bam` file contains only reads falling in specific genomic regions, in order to reduce the file size. We have clustered single cells into three separate `bam` files, associated with one of three cell types: erythroblast, granulocytes, and B-cells. Your job is to explore which `bam` file is associated with which cell type by looking at cell-type specific regions in the genome browser. 
 
 Cell-type specific regions to look at:
 
@@ -201,9 +206,19 @@ chr11   44114099        45269522
 >     1. Can you infer which clusters correspond to which cell types based on the coverage around the four regions?
 >
 
+> ### Solution (only `bigwig` shown):
+>    1. 
+>    H3K4me3_cluster_3 and H3K4me1_cluster_2 have correlated peaks, high in erythroblast-specific regions. 
+>    ![Hbb_region.png](images/Hbb_region_bw.png)
+>    H3K4me3_cluster_5 and H3K4me1_cluster_5 have correlated peaks, high in granulocyte-specific regions.
+>    ![S100a8_region.png](images/S100a_region_bw.png)
+>    H3K4me3_cluster_6 and H3K4me1_cluster_11 have correlated peaks, high in B-cell-specific regions.
+>    ![Ebf1_region.png](images/Ebf1_region_bw.png)
+
+
 # Step 5: Detecting enriched regions (peak calling)
 
-We could see in the scChIC-seq data some enriched regions that differ across samples. We now would like to call these regions to obtain their coordinates, using `hiddenDomains`
+We could see in the scChIC-seq data some enriched regions that differ across samples. We now would like to call these regions to obtain their coordinates, using `hiddenDomains`. Perhaps the number of peaks predicted in each region across each sample may be clues to what cell type each sample is.
 
 > ###  Hands-on: Peak calling
 >
@@ -218,9 +233,21 @@ We could see in the scChIC-seq data some enriched regions that differ across sam
 >
 >    > ### Questions
 >    >
->    > Which type of files were generated? What do they include?
->    > How do the peaks called differ between samples? Can you infer cell types based on this analysis? 
->   
+>    > 1. Which type of files were generated? What do they include?
+>    > 2. How do the peaks called differ between samples? Can you infer cell types based on this analysis? 
+>    > 
+>    > ### Solutions
+>    >
+>    > 1. [See hiddenDomains manual](http://hiddendomains.sourceforge.net)
+>    > 2. 
+>    >
+>    
+>    H3K4me3_cluster_3 and H3K4me1_cluster_2 have correlated peaks, high in erythroblast-specific regions. 
+>    ![Hbb_region.png](images/Hbb_region.png)
+>    H3K4me3_cluster_5 and H3K4me1_cluster_5 have correlated peaks, high in granulocyte-specific regions.
+>    ![S100a8_region.png](images/S100a_region.png)
+>    H3K4me3_cluster_6 and H3K4me1_cluster_11 have correlated peaks, high in B-cell-specific regions.
+>    ![Ebf1_region.png](images/Ebf1_region.png)
 
 
 # Conclusion
