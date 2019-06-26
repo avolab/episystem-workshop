@@ -7,6 +7,7 @@ questions:
     - What are histone modifications?
     - How do we explore the genomic distribution of cuts made by PA-MNase in scChIC-seq? 
     - How do levels in H3K4me3 histone modification differ across cell types in the bone marrow?
+    
 objectives:
     - TODO
     - Inspect the read quality
@@ -15,11 +16,14 @@ objectives:
     - Assess the quality of a scChIC-seq experiment
     - Extract coverage files
     - Call enriched regions or peaks
+    
 time_estimation: "3h"
+
 key_points:
     - TODO: Key point 1
     - Key point 2
     - Key point 3
+    
 contributors:
     - anna-alemany
     - vivekbhr
