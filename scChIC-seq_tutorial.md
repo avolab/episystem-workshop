@@ -61,7 +61,13 @@ Binding certain proteins to each of the eight histone proteins may modify the ch
 ![Fadloun et al, 2013](images/histone_modifications.jpg "Source: Fadloun et al, 2013")
 
 
-In the upcoming tutorial, we will look at H3K4me3 scChIC-seq data from mouse bone marrow and see how we can do preliminary analyses to see how histone modification levels differ between cell types. We have prepared the files such that the individual cells are grouped into three clusters based on three cell types: erythroblasts, lymphocytes, and granulocytes. Your job is to infer which cluster corresponds to which cell type.
+In the upcoming tutorial, we will look at the activator marks H3K4me1 and H3K4me3 scChIC-seq data from mouse bone marrow. We have already performed a dimensionality reduction ([using a method called Latent Dirichlet Allocation](https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation)) on the scChIC-seq in order to cluster cells ([using a method called Louvain community detection](https://en.wikipedia.org/wiki/Louvain_modularity)) with similar histone modification profiles.  This analysis gives us a 2-dimensional summary of the scChIC-seq data: 
+
+![R2 per base seq content](images/H3K4me1_umap.png)
+
+![R2 per base seq content](images/H3K4me3_umap.png)
+
+We will use this pre-defined clustering to explore scChIC-seq data. We suspect that the differences across cells could be coming from distinct cell types. In this exercise, we will focus on three clusters for each histone mark: for H3K4me1 clusters 11, 2, 5; for H3K4me3 clusters 6, 3, 5. We have already prepared the scChIC-seq data such that the individual cells are grouped into three clusters. Your job is to infer which cluster corresponds to which cell type.
 
 Overview of files provided in this tutorial:
 
