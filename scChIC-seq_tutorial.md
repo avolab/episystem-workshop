@@ -37,21 +37,20 @@ software needed:
     - R
     - perl
     - python
-    
-    
-    
----
+
+
+
 
 # Introduction
 
 Within a cell nucleus, the DNA is tightly-packed and the chromatin is spatially distributed with different levels and scales of organizations. At the smallest scale, DNA is packaged into units called nucleosomes, made of eight histone proteins.
 
 
-Transcription factors (TFs) in concert with histone modifications shape the chromatin landscape of the genome, and thus regulate cell types and cell states. Histone modifications form an adaptable epigenetic regulatory layer that mediate dynamic transcriptional programs. Functional genomics assays, the most popular involving chromatin immunoprecipitation (ChIP), have revealed active and repressive chromatin structures in bulk tissues. However, inefficiencies of ChIP hinder its application in single cells, preventing genome-wide analysis of histone modifications along the continuum of cellular phenotypes. Therefore, how chromatin landscapes change between repressed, poised, and active states during development and homeostasis is relatively unexplored at the single-cell level. 
+Transcription factors (TFs) in concert with histone modifications shape the chromatin landscape of the genome, and thus regulate cell types and cell states. Histone modifications form an adaptable epigenetic regulatory layer that mediate dynamic transcriptional programs. Functional genomics assays, the most popular involving chromatin immunoprecipitation (ChIP), have revealed active and repressive chromatin structures in bulk tissues. However, inefficiencies of ChIP hinder its application in single cells, preventing genome-wide analysis of histone modifications along the continuum of cellular phenotypes. Therefore, how chromatin landscapes change between repressed, poised, and active states during development and homeostasis is relatively unexplored at the single-cell level.
 
 Binding certain proteins to each of the eight histone proteins may modify the chromatin structure and may result in changes in transcription level. For example, the H3K4me3 is adding 3 methyl-group of the 4th Lysine in the histone 3 amino-acid. This modification is known to activate the transcription on nearby genes by opening the chromatin. The H3K27me3 on the other hand is inactivating the transcription of the nearby genes:
 
-![Fadloun et al, 2013](../../images/formation_of_super-structures_on_xi/histone_modifications.jpg "Source: Fadloun et al, 2013")
+![Fadloun et al, 2013](images/histone_modifications.jpg "Source: Fadloun et al, 2013")
 
 
 In the upcoming tutorial, we will look at H3K4me3 scChIC-seq data from mouse bone marrow and see how we can do preliminary analyses to see how histone modification levels differ between cell types. We have prepared the files such that the individual cells are grouped into three clusters based on three cell types: erythroblasts, lymphocytes, and granulocytes. Your job is to infer which cluster corresponds to which cell type.
@@ -62,7 +61,7 @@ In the upcoming tutorial, we will look at H3K4me3 scChIC-seq data from mouse bon
 
 # Step 1: Quality control and treatment of the sequences
 
-Let's first assess the quality of the demultiplexed `fastq` files. Demultiplexed means UMI and cell barcodes have been clipped from the `fastq` file and placed in the header. 
+Let's first assess the quality of the demultiplexed `fastq` files. Demultiplexed means UMI and cell barcodes have been clipped from the `fastq` file and placed in the header.
 
 > ### Hands-on: First look at the `fastq` files
 > 1. Import `demultiplexedR1_10000rows.fastq.gz` and `demultiplexedR2_10000rows.fastq.gz` from [Zenodo](https://zenodo.org/record/1324070) or from the data library (ask your instructor)
@@ -93,23 +92,23 @@ Sequence quality control is therefore an essential first step in your analysis. 
 >    >
 >    > 1. How is the quality of the reads in `H3K4me3_demultiplexedR1_10000rows.fastq.gz`?
 >    > 2. And in `H3K4me3_demultiplexedR2_10000rows.fastq.gz`?
->    > 3. Why do the lengths of the bases differ? Hint: Remember that the `fastq` files have been demultiplexed. 
+>    > 3. Why do the lengths of the bases differ? Hint: Remember that the `fastq` files have been demultiplexed.
 >    > 4. What should we do if the quality of the reads is not good?
 >    > 5. What are the most common start sequences for the `fastq` files? How does it differ for `R1` and `R2`?
 >    >
->    > > ### Solution 
+>    > > ### Solution
 >    > > 1. The reads in `H3K4me3_demultiplexedR1_10000rows.fastq.gz` are of good quality
 >    > >     - The mean quality score over the reads is quite high
 >    > >
 >    > >
 >    > >
->    > > 
+>    > >
 >    > >
 >    > >
 >    > >
 >    > >     - No N in the reads
 >    > >
->    > >        ![Per base N content for read1](../../images/formation_of_super-structures_on_xi/read1_per_base_n_content.png "Per base N content")
+>    > >        ![Per base N content for read1](images/read1_per_base_n_content.png "Per base N content")
 >    > >
 >    > >     - No duplicated sequences
 >    > >
@@ -145,8 +144,8 @@ We obtain sequences corresponding to a portion of DNA linked to the histone mark
 > ### Hands-on: Mapping
 >
 > 1. Run bwa on the fastq files, using an mm10 reference genome.
-> TODO Add reference index files into the server. 
-> 
+> TODO Add reference index files into the server.
+>
 > `bwa mem -t 1 $ref ${f}_R1.fastq.gz ${f}__R2.fastq.gz | samtools view -b - > $outf`
 >
 > 2. Inspect the mapping stats
@@ -162,12 +161,12 @@ The output of BWA is a BAM file (binary of Sequence Alignment/Map).
 
 ## Inspection of a BAM file
 
-TODO Add more things to inspect. 
+TODO Add more things to inspect.
 
 
 ## Correlation between samples
 
-We will compare genome-wide correlation of H3K4me3 and H3K4me1 for different cell clusters. 
+We will compare genome-wide correlation of H3K4me3 and H3K4me1 for different cell clusters.
 
 To compute the correlation between the samples we are going to to use the QC modules of [deepTools](http://deeptools.readthedocs.io/), a software package for the QC, processing and analysis of NGS data. Before computing the correlation a time consuming step is required, which is to compute the read coverage (number of unique reads mapped at a given nucleotide) over a large number of regions from each of the inputed BAM files. For this we will use the tool **multiBamSummary** {% icon tool %}. Then, we use **plotCorrelation** {% icon tool %} from deepTools to compute and visualize the sample correlation. This is a fast process that allows to quickly try different color combinations and outputs.
 
@@ -214,9 +213,9 @@ chr11   44114099        45269522
 
 
 
-> ### Questions: 
+> ### Questions:
 >     1. Can you infer which clusters correspond to which cell types based on the coverage around the four regions?
-> 
+>
 
 # Step 5: Detecting enriched regions (peak calling)
 
@@ -243,3 +242,4 @@ We could see in the scChIC-seq data some enriched regions that differ across sam
 # Conclusion
 
 We learned to explore `fastq` and `bam` files as well as do calculations on them. We visualized `bam` files and `bigwig` files to see how reads are mapped on the genome. 
+
