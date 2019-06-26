@@ -5,7 +5,7 @@ Link to files: [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3256650.svg)]
 questions:
     - TODO
     - What are histone modifications?
-    - How is a raw set of scChIC-seq data processed?
+    - How do we explore the genomic distribution of cuts made by PA-MNase in scChIC-seq? 
     - How do levels in H3K4me3 histone modification differ across cell types in the bone marrow?
 objectives:
     - TODO
@@ -21,12 +21,13 @@ key_points:
     - Key point 2
     - Key point 3
 contributors:
-    - Galaxy Training Team
-    - vivekbhr
-    - jakeyeung
     - anna-alemany
-    - BuysDB
+    - vivekbhr
+    - Buys de Barbanson
     - Alexander van Oudenaarden
+    - Jake Yeung
+    - Peter Zeller
+    
 software needed:
     - fastqc
     - samtools
@@ -37,8 +38,6 @@ software needed:
     - R
     - perl
     - python
-
-
 
 
 # Introduction
@@ -55,6 +54,7 @@ Binding certain proteins to each of the eight histone proteins may modify the ch
 
 In the upcoming tutorial, we will look at H3K4me3 scChIC-seq data from mouse bone marrow and see how we can do preliminary analyses to see how histone modification levels differ between cell types. We have prepared the files such that the individual cells are grouped into three clusters based on three cell types: erythroblasts, lymphocytes, and granulocytes. Your job is to infer which cluster corresponds to which cell type.
 
+Overview of files provided in this tutorial:
 
 - TODO: Add Sample names here
 
@@ -97,37 +97,8 @@ Sequence quality control is therefore an essential first step in your analysis. 
 >    > 5. What are the most common start sequences for the `fastq` files? How does it differ for `R1` and `R2`?
 >    >
 >    > > ### Solution
->    > > 1. The reads in `H3K4me3_demultiplexedR1_10000rows.fastq.gz` are of good quality
->    > >     - The mean quality score over the reads is quite high
->    > >
->    > >
->    > >
->    > >
->    > >
->    > >
->    > >
->    > >     - No N in the reads
->    > >
->    > >        ![Per base N content for read1](images/read1_per_base_n_content.png "Per base N content")
->    > >
->    > >     - No duplicated sequences
->    > >
->    > >        
->    > >
->    > >    
->    > >
->    > >        
->    > >
->    > > 2. The reads in R2 are a bit worse:
->    > >
->    > >
->    > > 3. If the quality of the reads is not good, we should:
->    > >    1. Check what is wrong and think about it: it may come from the type of sequencing or what we sequenced (high quantity of overrepresented sequences in transcriptomics data, biaised percentage of bases in HiC data)
->    > >    2. Ask the sequencing facility about it
->    > >    3. Perform some quality treatment (in a reasonable way to not loose too much information) with some trimming or removal of bad reads
->    > > 4. TODO:
->
-
+>    > > 1. 
+>    > > 
 # Step 2: Mapping of the reads
 
 We obtain sequences corresponding to a portion of DNA linked to the histone mark of interest, H3K4me3 in this case. H3K4me3 is associated with active chromatin. It would be interesting to know if there is a difference across cell types.
