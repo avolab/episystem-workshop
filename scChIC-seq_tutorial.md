@@ -252,11 +252,11 @@ We could see in the scChIC-seq data some enriched regions that differ across sam
 >    >
 >    
 >    H3K4me3_cluster_3 and H3K4me1_cluster_2 have correlated peaks, high in erythroblast-specific regions. 
->    ![Hbb_region.png](images/Hbb_region.png)
+>    ![Hbb_region.png](images/Hbb_region_hd.png)
 >    H3K4me3_cluster_5 and H3K4me1_cluster_5 have correlated peaks, high in granulocyte-specific regions.
->    ![S100a8_region.png](images/S100a_region.png)
+>    ![S100a8_region.png](images/S100a_region_hd.png)
 >    H3K4me3_cluster_6 and H3K4me1_cluster_11 have correlated peaks, high in B-cell-specific regions.
->    ![Ebf1_region.png](images/Ebf1_region.png)
+>    ![Ebf1_region.png](images/Ebf1_region_hd.png)
 
 
 # Conclusion
