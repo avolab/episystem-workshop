@@ -3,12 +3,14 @@ Link to files: [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3256650.svg)]
 
 
 questions:
+
     - TODO
     - What are histone modifications?
     - How do we explore the genomic distribution of cuts made by PA-MNase in scChIC-seq? 
     - How do levels in H3K4me3 histone modification differ across cell types in the bone marrow?
     
 objectives:
+
     - TODO
     - Inspect the read quality
     - Trim low quality bases
@@ -20,11 +22,13 @@ objectives:
 time_estimation: "3h"
 
 key_points:
+
     - TODO: Key point 1
     - Key point 2
     - Key point 3
     
 contributors:
+
     - anna-alemany
     - vivekbhr
     - Buys de Barbanson
@@ -33,6 +37,7 @@ contributors:
     - Peter Zeller
     
 software needed:
+
     - fastqc
     - samtools
     - deeptools
