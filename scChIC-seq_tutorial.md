@@ -1,42 +1,34 @@
 ---
 Link to files: [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3256650.svg)](https://doi.org/10.5281/zenodo.3256650)
 
-
-questions:
-
-    - TODO
-    - What are histone modifications?
-    - How do we explore the genomic distribution of cuts made by PA-MNase in scChIC-seq? 
-    - How do levels in H3K4me3 histone modification differ across cell types in the bone marrow?
-    
 objectives:
 
-    - TODO
     - Inspect the read quality
-    - Trim low quality bases
     - Map reads on a reference genome
     - Assess the quality of a scChIC-seq experiment
-    - Extract coverage files
+    - Compare coverage files
     - Call enriched regions or peaks
+    - Explore the genomic distribution of cuts made by PA-MNase in scChIC-seq? 
+    - Analyze histone modification levels across cell types in the bone marrow?
     
 time_estimation: "3h"
 
-key_points:
+Take home messages:
 
-    - TODO: Key point 1
-    - Key point 2
-    - Key point 3
+    - Sequence affinity of PA-MNAse can be seen in the `fastq` files.
+    - Although scChIC-seq data is sparse at the single cell level, there is enough information to cluster cells into pseudobulk samples that reflect cell-type specific chromatin structures.
+    - We can define cell-type specific genomic regions by finding enriched signal along genomic regions.
     
 contributors:
 
-    - anna-alemany
-    - vivekbhr
+    - Anna Alemany
     - Buys de Barbanson
+    - Vivek Bhardwaj
     - Alexander van Oudenaarden
     - Jake Yeung
     - Peter Zeller
     
-software needed:
+software needed (hopefully already installed):
 
     - fastqc
     - samtools
