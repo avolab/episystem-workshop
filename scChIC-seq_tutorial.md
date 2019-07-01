@@ -77,48 +77,28 @@ Let's first assess the quality of the demultiplexed `fastq` files. Demultiplexed
 
 > ### Hands-on: First look at the `fastq` files
 > 1. Using the terminal, go to the directory `Handouts/EpiSyStem_Workshop_Files/fastq_full`
-> 2. Inspect the `fastq` file by using the `less` command. What differences do you detect when comparing the reads in these files to the reads in the `fastq` files available in the `fastq_raw` directory?
+> 2. Inspect the `fastq` files by using the `less` command. What differences do you detect when comparing the reads in these files to the reads in the `fastq` files available in the `fastq_raw` directory?
+> 3. Run the command `head` on any of the two files. What is the output? Why do you think this does not work?
+> 4. In order to explore `zipped` files, the `head/tail/cat` commands are not good enough. For this reason, there is the command `zcat` which has the same function as `cat` but only works with `zipped` files. Try it out by running the command `zcat demultiplexedR1_10000rows.fastq.gz`.
 >
 
 During sequencing, errors are introduced, such as incorrect nucleotides being called. These are due to the technical limitations of each sequencing platform. Sequencing errors might bias the analysis and can lead to a misinterpretation of the data.
 
 Sequence quality control is therefore an essential first step in your analysis. We use here similar tools as described in ["Quality control" tutorial]({{site.baseurl}}/topics/sequence-analysis): [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/). Interpretation of fastqc outputs can be found here [FastQC Output](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/).
 
-
-
 > ### Hands-on: Quality control
 >
 > 1. Run **FastQC** on the fastq files
 >    - `fastqc H3K4me3_demultiplexedR1_10000rows.fastq.gz` and `fastqc H3K4me3_demultiplexedR2_10000rows.fastq.gz`
-> 2. Inspect the generated HTML files
+> 2. Inspect the generated HTML files. To do so, run the command `open demultiplexedR1_10000rows_fastqc.html` and Enable the view.
+> 3. Go back to the terminal by selecting with your mouse on  the corresponding tab in the top of your screen, and run the command `open demultiplexedR2_10000rows_fastqc.html`. Again by clicking with the mouse in the corresponding tab, you will be available to explore the contents of each HTML file. 
 >
 >    > ### Questions
 >    >
->    > 1. How is the quality of the read 1 and read 2? Why do the lengths of the bases differ? Hint: Remember that the `fastq` files have been demultiplexed.
+>    > 1. How is the quality of the read 1 and read 2? Why do the lengths of the reads differ? Hint: Remember that the `fastq` files have been demultiplexed.
 >    > 2. What are the most common start sequences for the `fastq` files? How does it differ for `R1` and `R2`?
 >    > 3. Have the adapters been trimmed in the demultiplexed `fastq` files?
 >    >
->    > > ### Solution
->    > > 1. 
->    > > Read 1 per base sequence quality. 65 base pairs because the 3 nt UMI and 8 nt cell barcodes were trimmed.
->    > > ![R1 per base seq qual](images/R1_per_base_content.png)
->    > > Read 2 per base sequence quality. 76 nt long, no UMIs or barcodes in this read. 
->    > > ![R2 per base seq qual](images/R2_per_base_content.png)
->    > > 
->    > > 2. 
->    > > Read 1 per base sequence content. First base is likely coming from Illumina adapters. Second base comes from MNase cuts, which has an affinity for "AA/TT" dinucleotides. 
->    > > ![R1 per base seq content](images/R1_per_base_content.png)
->    > > Read 2 per base sequence quality (76 nt long, no UMIs or barcodes in this read).
->    > > ![R2 per base seq content](images/R2_per_base_content.png)
->    > > 
->    > > 3. No.
->    > > ![R1 per base seq content](images/R1_adapter_content.png)
->    > > Read 2 per base sequence quality (76 nt long, no UMIs or barcodes in this read).
->    > > ![R2 per base seq content](images/R2_adapter_content.png)
->    > > 
-
-
-
 
 
 # Step 2: Mapping of the reads
