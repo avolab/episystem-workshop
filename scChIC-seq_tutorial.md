@@ -76,16 +76,8 @@ Remember you can navigate around the diretctories using `cd` and explore the fil
 Let's first assess the quality of the demultiplexed `fastq` files. Demultiplexed means UMI and cell barcodes have been clipped from the `fastq` file and placed in the header.
 
 > ### Hands-on: First look at the `fastq` files
-> 1. Import `demultiplexedR1_10000rows.fastq.gz` and `demultiplexedR2_10000rows.fastq.gz` from [Zenodo](https://zenodo.org/record/1324070) or from the data library (ask your instructor)
->
->    ```
->    https://zenodo.org/record/3256650/files/demultiplexedR1_10000rows.fastq.gz
->    https://zenodo.org/record/3256650/files/demultiplexedR2_10000rows.fastq.gz
->    ```
->
-> 2. Rename the files to `H3K4me3_demultiplexedR1_10000rows.fastq.gz` and `H3K4me3_demultiplexedR2_10000rows.fastq.gz`
->
-> 3. Inspect the `fastq` file by using the `less` command
+> 1. Using the terminal, go to the directory `Handouts/EpiSyStem_Workshop_Files/fastq_full`
+> 2. Inspect the `fastq` file by using the `less` command. What differences do you detect when comparing the reads in these files to the reads in the `fastq` files available in the `fastq_raw` directory?
 >
 
 During sequencing, errors are introduced, such as incorrect nucleotides being called. These are due to the technical limitations of each sequencing platform. Sequencing errors might bias the analysis and can lead to a misinterpretation of the data.
