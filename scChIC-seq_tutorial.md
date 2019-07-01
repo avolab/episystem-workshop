@@ -65,6 +65,7 @@ Remember you can navigate around the diretctories using `cd` and explore the fil
 
 - `fastq_raw/raw_fastq_R${read}.fastq` : raw `fastq` files to see what raw data looks like before demultiplexing. You already had a look at these in the previous tutorial. ${read} denotes a bash variable that in this case can be equal to either 1 or 2. 
 - `fastq_full/demultiplexedR${read}_10000rows.fastq.gz` : demultiplexed `fastq` files for quality control checks before mapping. Again, ${read} is a bash variable equal to 1 or 2. Note that this fastq files are zipped. 
+- `references/Mus_musculus.GRCm38.dna_rm.primary_assembly.fa`: reference genome `fasta` file.
 - `sorted_bams_filtered/${histone_mark}_cluster_${clstrID}.filtered.bam` : single cell scChIC-seq profiles grouped by clusters. Here, ${histone_mark} is either H3K4me1 or H3K4me3; and ${clstrID} will be either 2, 5 or 11 for H3K4me1 and 3, 5 or 6 for H3K4me3. We have already assigned cells to clusters for you, you just have to infer the biological meaning of these clusters (i.e., infer the cell type). We will use these to visualize `bam` files with `IGV`, explore how to calculate number of reads by `MAPQ` quality, and do peak calling.  `bam` files are subset to include only four main regions to reduce file size (defined in `regions/regions_to_filter.txt`).
 - `regions/regions_to_filter.txt` : File containing the four genomic regions that contain signal in the `bam` files. 
 - `sorted_bigwigs/${histone_mark}_cluster_${clstrID}.bw` : `bigwig` files of scChIC-seq profiles, providing genome-wide coverage of scChIC-seq grouped by their clusters (pseudobulk). We will use `bigwig` files to correlate across pseudobulk samples and visualize the on the `IGV`.
@@ -110,17 +111,15 @@ We obtain sequences corresponding to a portion of DNA linked to the histone mark
 
 Mapping requires a database of the genome to which you are mapping. These files often are downloaded from publicly available genome browsers such as [Ensembl](https://www.ensembl.org/index.html) or [UCSC Genome Browser](https://genome-euro.ucsc.edu). We have already downloaded the mouse genome (genome assembly `mm10`) and created an index used for mapping. The index file is used often in mapping programs to allow fast and efficient access to the large genome. 
 
-
-
 > ### Hands-on: Mapping
 >
-> 1. Run bwa on the fastq files, using an mm10 reference genome.
+> 1. Run `bwa` on the fastq files, using an mm10 reference genome.
 >
 >
-> `bwa mem -t 1 $ref ${f}_R1_10000rows.fastq.gz ${f}__R2_10000rows.fastq.gz | samtools view -b - > $outf`
->
-> `ref` is the variable that points to the genome. You can use the pre-calculated genome index: `$HOME/episystem-workshop/references/Mus_musculus.GRCm38.dna_rm.primary_assembly.fa`
-> `f` is the variable that points to the prefix of the `fastq` file (the part before `_R1.fastq.gz`): `$HOME/episystem-workshop/data/fastq_full/demultiplexed`
+> `bwa mem -t 1 ../references/Mus_musculus.GRCm38.dna_rm.primary_assembly.fa demultiplexedR1_10000rows.fastq.gz demultiple
+xedR2_10000rows.fastq.gz | samtools view -b - > demux_map.bam`
+> `bwa mem -t 1 ../references/Mus_musculus.GRCm38.dna_rm.primary_assembly.fa demultiplexedR1_10000rows.fastq.gz demultiple
+xedR2_10000rows.fastq.gz > demux_map.sam`
 >
 > 2. Inspect the mapping stats
 >
