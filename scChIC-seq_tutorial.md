@@ -1,25 +1,22 @@
 ---
-Link to files: [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3256650.svg)](https://doi.org/10.5281/zenodo.3256650)
 
-objectives:
+Objectives:
 
     - Inspect the read quality
     - Map reads on a reference genome
-    - Assess the quality of a scChIC-seq experiment
     - Compare coverage files
     - Call enriched regions or peaks
-    - Explore the genomic distribution of cuts made by PA-MNase in scChIC-seq? 
-    - Analyze histone modification levels across cell types in the bone marrow?
+    - Infer cell-type specific histone modification levels in the bone marrow
     
-time_estimation: "3h"
+Estimated time required: "3h"
 
 Take home messages:
 
-    - Sequence affinity of PA-MNAse can be seen in the `fastq` files.
+    - Sequence affinity of PA-MNAse can be seen in the fastq files.
     - Although scChIC-seq data is sparse at the single cell level, there is enough information to cluster cells into pseudobulk samples that reflect cell-type specific chromatin structures.
     - We can define cell-type specific genomic regions by finding enriched signal along genomic regions.
     
-contributors:
+Contributors:
 
     - Anna Alemany
     - Buys de Barbanson
@@ -28,7 +25,7 @@ contributors:
     - Jake Yeung
     - Peter Zeller
     
-software needed (hopefully already installed):
+Software needed (hopefully already installed):
 
     - fastqc
     - samtools
@@ -48,12 +45,12 @@ Within a cell nucleus, the DNA is tightly-packed and the chromatin is spatially 
 
 Transcription factors (TFs) in concert with histone modifications shape the chromatin landscape of the genome, and thus regulate cell types and cell states. Histone modifications form an adaptable epigenetic regulatory layer that mediate dynamic transcriptional programs. Functional genomics assays, the most popular involving chromatin immunoprecipitation (ChIP), have revealed active and repressive chromatin structures in bulk tissues. However, inefficiencies of ChIP hinder its application in single cells, preventing genome-wide analysis of histone modifications along the continuum of cellular phenotypes. Therefore, how chromatin landscapes change between repressed, poised, and active states during development and homeostasis is relatively unexplored at the single-cell level.
 
-Binding certain proteins to each of the eight histone proteins may modify the chromatin structure and may result in changes in transcription level. For example, the H3K4me3 is adding 3 methyl-group of the 4th Lysine in the histone 3 amino-acid. This modification is known to activate the transcription on nearby genes by opening the chromatin. The H3K27me3 on the other hand is inactivating the transcription of the nearby genes:
+Binding certain proteins to each of the eight histone proteins may modify the chromatin structure and may result in changes in transcription level. For example, the H3K4me3 is adding 3 methyl-group of the 4th Lysine in the histone 3 amino-acid. This modification is known to activate the transcription on nearby genes by opening the chromatin. 
 
 ![Fadloun et al, 2013](images/histone_modifications.jpg "Source: Fadloun et al, 2013")
 
 
-In the upcoming tutorial, we will look at the activator marks H3K4me1 and H3K4me3 scChIC-seq data from mouse bone marrow. We have already performed a dimensionality reduction ([using a method called Latent Dirichlet Allocation](https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation)) on the scChIC-seq in order to cluster cells ([using a method called Louvain community detection](https://en.wikipedia.org/wiki/Louvain_modularity)) with similar histone modification profiles.  This analysis gives us a 2-dimensional summary of the scChIC-seq data: 
+In the upcoming tutorial, we will look at the activator marks H3K4me1 and H3K4me3 scChIC-seq data from mouse bone marrow. We have already performed a dimensionality reduction ([using a method called Latent Dirichlet Allocation](https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation)) on the scChIC-seq in order to cluster cells ([using a method called Louvain community detection](https://en.wikipedia.org/wiki/Louvain_modularity)) with similar histone modification profiles.  The cell-cell relationships calculated from this analysis can be visualized in a 2-dimensional plot: 
 
 ![R2 per base seq content](images/H3K4me1_umap.png)
 
@@ -63,6 +60,9 @@ We will use this pre-defined clustering to explore scChIC-seq data. We suspect t
 
 Overview of files provided in this tutorial:
 
+All file paths are relative to the data directory: `$HOME/episystem-workshop/data`
+
+- `fastq_raw/raw_fastq_${read}.fastq` : raw `fastq` files to see what raw data looks like before demultiplexing. 
 - `fastq_full/demultiplexedR${read}_10000rows.fastq.gz` : demultiplexed `fastq` files for quality control checks before mapping.
 - `sorted_bams_filtered/${histone_mark}_cluster_${clstrID}.filtered.bam` : single cell scChIC-seq profiles grouped by clusters. We have already assigned cells to clusters for you, you just have to infer the biological meaning of these clusters (i.e., infer the cell type). We will use these to visualize `bam` files with `IGV`, explore how to calculate number of reads by `MAPQ` quality, and do peak calling.  `bam` files are subset to include only four main regions to reduce file size (defined in `regions/regions_to_filter.txt`).
 - `regions/regions_to_filter.txt` : File containing the four genomic regions that contain signal in the `bam` files. 
@@ -135,12 +135,19 @@ We obtain sequences corresponding to a portion of DNA linked to the histone mark
 
 ## Running BWA
 
+Mapping requires a database of the genome to which you are mapping. These files often are downloaded from publicly available genome browsers such as [Ensembl](https://www.ensembl.org/index.html) or [UCSC Genome Browser](https://genome-euro.ucsc.edu). We have already downloaded the mouse genome (genome assembly `mm10`) and created an index used for mapping. The index file is used often in mapping programs to allow fast and efficient access to the large genome. 
+
+
+
 > ### Hands-on: Mapping
 >
 > 1. Run bwa on the fastq files, using an mm10 reference genome.
-> TODO Add reference index files into the server.
 >
-> `bwa mem -t 1 $ref ${f}_R1.fastq.gz ${f}__R2.fastq.gz | samtools view -b - > $outf`
+>
+> `bwa mem -t 1 $ref ${f}_R1_10000rows.fastq.gz ${f}__R2_10000rows.fastq.gz | samtools view -b - > $outf`
+>
+> `ref` is the variable that points to the genome. You can use the pre-calculated genome index: `$HOME/episystem-workshop/references/Mus_musculus.GRCm38.dna_rm.primary_assembly.fa`
+> `f` is the variable that points to the prefix of the `fastq` file (the part before `_R1.fastq.gz`): `$HOME/episystem-workshop/data/fastq_full/demultiplexed`
 >
 > 2. Inspect the mapping stats
 >
@@ -162,16 +169,15 @@ Anna TODO Add more things to inspect.
 
 We will compare genome-wide correlation of H3K4me3 and H3K4me1 for different cell clusters.
 
-To compute the correlation between the samples we are going to to use the QC modules of [deepTools](http://deeptools.readthedocs.io/), a software package for the QC, processing and analysis of NGS data. Before computing the correlation a time consuming step is required, which is to compute the read coverage (number of unique reads mapped at a given nucleotide) over a large number of regions from each of the inputed BAM files. For this we will use the tool **multiBamSummary** {% icon tool %}. Then, we use **plotCorrelation** {% icon tool %} from deepTools to compute and visualize the sample correlation. This is a fast process that allows to quickly try different color combinations and outputs.
+To compute the correlation between the samples we are going to to use the QC modules of [deepTools](http://deeptools.readthedocs.io/), a software package for the QC, processing and analysis of NGS data. Before computing the correlation a time consuming step is required, which is to compute the read coverage (number of unique reads mapped at a given nucleotide) over a large number of regions from each of the inputed BAM files. For this we will use the tool **multiBamSummary** . Then, we use **plotCorrelation**  from deepTools to compute and visualize the sample correlation. This is a fast process that allows to quickly try different correlation methods and visual outputs.
 
 Since in this tutorial we are interested in assessing H3K4me3 and H3K4me1 scChIC-seq samples. To save time, we have already done that and summarized the scChIC-seq data as bigwig files, which contains the read coverage.
 
 > ### Hands-on: Correlation between samples
 >
-> 1. Download the read coverage files `bigwig`.
+> 1. Find the `bigwig` files in the `data` directory.
 >
-> 2. Rename the files
-> 3. Compare bigwigs using `multiBigwigSummary`
+> 2. Compare bigwigs using `multiBigwigSummary`
 >    - *"Sample order matters"*: `No`
 >       - *"BAM/CRAM file"*: the six imported `bigwig` files
 >    - *"Choose computation mode"*: `Bins`
@@ -201,7 +207,12 @@ Since in this tutorial we are interested in assessing H3K4me3 and H3K4me1 scChIC
 
 The `bam` file contains only reads falling in specific genomic regions, in order to reduce the file size. We have clustered single cells into three separate `bam` files, associated with one of three cell types: erythroblast, granulocytes, and B-cells. Your job is to explore which `bam` file is associated with which cell type by looking at cell-type specific regions in the genome browser. 
 
-Cell-type specific regions to look at:
+
+Download the `.bam`, `.bam.bai`, and `bigwig (.bw)` files onto your computer.
+
+Open the files using `IGV`, which should already be installed on your computer. 
+
+Cell-type specific regions to look at these four regions:
 
 ```
 chr7    114972165       116898716
@@ -229,6 +240,9 @@ chr11   44114099        45269522
 # Step 5: Detecting enriched regions (peak calling)
 
 We could see in the scChIC-seq data some enriched regions that differ across samples. We now would like to call these regions to obtain their coordinates, using `hiddenDomains`. Perhaps the number of peaks predicted in each region across each sample may be clues to what cell type each sample is.
+
+
+After running `hiddenDomains`, visualize the `.bed` files by downloading them onto your computer and opening them with `IGV`. 
 
 > ###  Hands-on: Peak calling
 >
@@ -262,5 +276,5 @@ We could see in the scChIC-seq data some enriched regions that differ across sam
 
 # Conclusion
 
-We learned to explore `fastq` and `bam` files as well as do calculations on them. We visualized `bam` files and `bigwig` files to see how reads are mapped on the genome. 
+We learned to explore `fastq` and `bam` files as well as do calculations on them. We visualized `bam` files and `bigwig` files to see how reads are mapped on the genome. Finally, we inferred genomic regions of interest by defining cell-type specific levels of histone marks. 
 
