@@ -60,11 +60,12 @@ We will use this pre-defined clustering to explore scChIC-seq data. We suspect t
 
 Overview of files provided in this tutorial:
 
-All file paths are relative to the data directory: `$HOME/episystem-workshop/data`
+All file paths are relative to the data directory: `$HOME/Handouts/EpiSyStem_Workshop_Files`
+Remember you can navigate around the diretctories using `cd` and explore the files present in each direction using `ls`. 
 
-- `fastq_raw/raw_fastq_${read}.fastq` : raw `fastq` files to see what raw data looks like before demultiplexing. 
-- `fastq_full/demultiplexedR${read}_10000rows.fastq.gz` : demultiplexed `fastq` files for quality control checks before mapping.
-- `sorted_bams_filtered/${histone_mark}_cluster_${clstrID}.filtered.bam` : single cell scChIC-seq profiles grouped by clusters. We have already assigned cells to clusters for you, you just have to infer the biological meaning of these clusters (i.e., infer the cell type). We will use these to visualize `bam` files with `IGV`, explore how to calculate number of reads by `MAPQ` quality, and do peak calling.  `bam` files are subset to include only four main regions to reduce file size (defined in `regions/regions_to_filter.txt`).
+- `fastq_raw/raw_fastq_R${read}.fastq` : raw `fastq` files to see what raw data looks like before demultiplexing. You already had a look at these in the previous tutorial. ${read} denotes a bash variable that in this case can be equal to either 1 or 2. 
+- `fastq_full/demultiplexedR${read}_10000rows.fastq.gz` : demultiplexed `fastq` files for quality control checks before mapping. Again, ${read} is a bash variable equal to 1 or 2. Note that this fastq files are zipped. 
+- `sorted_bams_filtered/${histone_mark}_cluster_${clstrID}.filtered.bam` : single cell scChIC-seq profiles grouped by clusters. Here, ${histone_mark} is either H3K4me1 or H3K4me3; and ${clstrID} will be either 2, 5 or 11 for H3K4me1 and 3, 5 or 6 for H3K4me3. We have already assigned cells to clusters for you, you just have to infer the biological meaning of these clusters (i.e., infer the cell type). We will use these to visualize `bam` files with `IGV`, explore how to calculate number of reads by `MAPQ` quality, and do peak calling.  `bam` files are subset to include only four main regions to reduce file size (defined in `regions/regions_to_filter.txt`).
 - `regions/regions_to_filter.txt` : File containing the four genomic regions that contain signal in the `bam` files. 
 - `sorted_bigwigs/${histone_mark}_cluster_${clstrID}.bw` : `bigwig` files of scChIC-seq profiles, providing genome-wide coverage of scChIC-seq grouped by their clusters (pseudobulk). We will use `bigwig` files to correlate across pseudobulk samples and visualize the on the `IGV`.
 - `chromsizes/chromsizes.${genome}.filt.txt` : size of genomes which are used as input in `hiddenDomains`. 
