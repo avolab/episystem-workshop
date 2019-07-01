@@ -91,7 +91,7 @@ Sequence quality control is therefore an essential first step in your analysis. 
 > 1. Run **FastQC** on the fastq files
 >    - `fastqc H3K4me3_demultiplexedR1_10000rows.fastq.gz` and `fastqc H3K4me3_demultiplexedR2_10000rows.fastq.gz`
 > 2. Inspect the generated HTML files. To do so, run the command `open demultiplexedR1_10000rows_fastqc.html` and Enable the view.
-> 3. Go back to the terminal by selecting with your mouse on  the corresponding tab in the top of your screen, and run the command `open demultiplexedR2_10000rows_fastqc.html`. Again by clicking with the mouse in the corresponding tab, you will be available to explore the contents of each HTML file. 
+> 3. Go back to the terminal by selecting with your mouse the corresponding tab in the top of your screen, and run the command `open demultiplexedR2_10000rows_fastqc.html`. Again by clicking with the mouse in the corresponding tab, you will be available to explore the contents of each HTML file. 
 >
 >    > ### Questions
 >    >
