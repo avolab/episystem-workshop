@@ -56,7 +56,7 @@ In the upcoming tutorial, we will look at the activator marks H3K4me1 and H3K4me
 
 ![R2 per base seq content](images/H3K4me3_umap.png)
 
-We will use this pre-defined clustering to explore scChIC-seq data. We suspect that the differences across cells could be coming from distinct cell types. In this exercise, we will focus on three clusters for each histone mark: for H3K4me1 clusters 11, 2, 5; for H3K4me3 clusters 6, 3, 5. We have already prepared the scChIC-seq data such that the individual cells are grouped into three clusters. Your job is to infer which cluster corresponds to which cell type.
+We will use this pre-defined clustering to explore scChIC-seq data. We suspect that the differences across cells could be coming from distinct cell types. In this exercise, we will focus on two clusters for each histone mark: for H3K4me1 clusters 2 and 5; for H3K4me3 clusters 3 and 5. We have already prepared the scChIC-seq data such that the individual cells are grouped into three clusters. Your job is to infer which cluster corresponds to which cell type.
 
 Overview of files provided in this tutorial:
 
@@ -214,14 +214,13 @@ In this tutorial we are interested in assessing H3K4me3 and H3K4me1 scChIC-seq s
 
 > ### Hands-on: Correlation between samples
 >
-> 1. Find the `bigwig` files (wit extension `.bw`) in the `EpiSyStem_Workshop_Files` directory.
+> 1. Find the `bigwig` files (wit extension `.bw`) in the `EpiSyStem_Workshop_Files` directory. You should find two files for each chromatin modification (H3K4me1 clusters 2 and 5; for H3K4me3 clusters 3 and 5).
 >
-> 2. Compare bigwigs using `multiBigwigSummary`
->    - *"Sample order matters"*: `No`
->       - *"BAM/CRAM file"*: the six imported `bigwig` files
+> 2. Compare all bigwigs using `multiBigwigSummary`. You can type `multiBigwigSummary` in the terminal to see all the options. We will use the following options:
 >    - *"Choose computation mode"*: `Bins`
->       - *"Bin size in bp"*: `100000`
->
+>    - *"Bin size in bp"*: `100000`
+>    - *"Input bigwig files"*: the four imported `bigwig` files
+>    - *"Output file"*: results.npz
 >
 >    Using these parameters, the tool will take bins of 100000 bp. For each bin the overlapping reads in each sample will be computed and stored into a matrix.
 >
