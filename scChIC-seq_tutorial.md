@@ -227,21 +227,21 @@ In this tutorial we are interested in assessing H3K4me3 and H3K4me1 scChIC-seq s
 > 4. Check results using `plotCorrelation`. Remember that you can type `plotCorrelation` by itself in the terminal to see the list of options. Use to following parameters to explore the file `results.npz`:
 >    - *"Correlation method"*: `Pearson` or `Spearman` (which do you think is more appropriate here? Check by inspecting the scatterplots)
 >    - Plot `heatmap` or `scatterplot`.
->    - In the scater plot, you can plot output in log scale (--log1p) for visualization. What happens if you do not use this option?
+>    - In the scatter plot, you can plot output in log scale (--log1p) for visualization. What happens if you do not use this option?
 > 
 > You can visualize the output by using the command `open` in the terminal. To go back to the terminal, select the corresponding tab in the top of your screen. 
 >    
 > > ### Questions
 > > - From the correlation plot, can you infer which clusters correspond to the same cell type in H3K4me1 and H3K4me3?>  
 
-# Step 4: Exploring `bam` and `bigwig` files on the IGV browser
+# Step 4: Exploring `bam` files on the IGV browser
 
-The `bam` file contains only reads falling in specific genomic regions, in order to reduce the file size. We have clustered single cells into three separate `bam` files, associated with one of three cell types: erythroblast, granulocytes, and B-cells. Your job is to explore which `bam` file is associated with which cell type by looking at cell-type specific regions in the genome browser. 
+Now, go to the directory `EpiSyStem_Workshop_Files/sorted_bams_filtered`, which contains a 6 different `bam` files. These files have been prepared by the instructors and only contain only reads falling in specific genomic regions, in order to reduce the file size. 
+For each modification, we have clustered single cells into three separate `bam` files, associated with one of three cell types: *erythroblast*, *granulocytes*, and *B-cells*. Your job is to explore which `bam` file is associated with which cell type by looking at cell-type specific regions in the genome browser. 
 
+Download the `.bam` and `.bam.bai` files onto your computer (`.bam.bai` files are important for hte IGV browser to be able to read the contents of the `bam` file). In order to download the files, select with your mouse the `Files` tab, go to the `EpiSyStem_Workshop_Files/sorted_bams_filtered` folder, select all the files present and create a zip folder. Next, download the zip folder onto yoru computer and unzip it. 
 
-Download the `.bam`, `.bam.bai`, and `bigwig (.bw)` files onto your computer.
-
-Open the files using `IGV`, which should already be installed on your computer. 
+Open all the `bam` files using `IGV`, which should already be installed on your computer. 
 
 Cell-type specific regions to look at these four regions:
 
@@ -253,19 +253,10 @@ chr11   44114099        45269522
 ```
 
 
-
 > ### Questions:
 >     1. Can you infer which clusters correspond to which cell types based on the coverage around the four regions?
->
-
-> ### Solution (only `bigwig` shown):
->    1. 
->    H3K4me3_cluster_3 and H3K4me1_cluster_2 have correlated peaks, high in erythroblast-specific regions. 
->    ![Hbb_region.png](images/Hbb_region_bw.png)
->    H3K4me3_cluster_5 and H3K4me1_cluster_5 have correlated peaks, high in granulocyte-specific regions.
->    ![S100a8_region.png](images/S100a_region_bw.png)
->    H3K4me3_cluster_6 and H3K4me1_cluster_11 have correlated peaks, high in B-cell-specific regions.
->    ![Ebf1_region.png](images/Ebf1_region_bw.png)
+> 
+> Hint: Hbb is a standard marker for erythroblast, S100a8 is a standard marker for granulocytes, and Ebf1 is a standard markers for B cells.
 
 
 # Step 5: Detecting enriched regions (peak calling)
