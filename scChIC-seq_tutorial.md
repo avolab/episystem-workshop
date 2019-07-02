@@ -241,10 +241,7 @@ For each modification, we have clustered single cells into three separate `bam` 
 
 Download the `.bam` and `.bam.bai` files onto your computer (`.bam.bai` files are important for hte IGV browser to be able to read the contents of the `bam` file). In order to download the files, select with your mouse the `Files` tab, go to the `EpiSyStem_Workshop_Files/sorted_bams_filtered` folder, select all the files present and create a zip folder. Next, download the zip folder onto yoru computer and unzip it. 
 
-Open all the `bam` files using `IGV`, which should already be installed on your computer. 
-
-Cell-type specific regions to look at these four regions:
-
+Open first the 3 `bam` files belonging to the modification *H3K4me1* using `IGV`, which should already be installed on your computer. And explore the following cell-type specific regions:
 ```
 chr7    114972165       116898716
 chr7    103325741       104425479
@@ -252,30 +249,29 @@ chr3    90523036        90870443
 chr11   44114099        45269522
 ```
 
-
 > ### Questions:
->     1. Can you infer which clusters correspond to which cell types based on the coverage around the four regions?
+> 1. Can you infer which clusters correspond to which cell types based on the coverage around the four regions?
 > 
 > Hint: Hbb is a standard marker for erythroblast, S100a8 is a standard marker for granulocytes, and Ebf1 is a standard markers for B cells.
 
+Repeat the same procedure with the modification *H3K4me3*. 
 
 # Step 5: Detecting enriched regions (peak calling)
 
 We could see in the scChIC-seq data some enriched regions that differ across samples. We now would like to call these regions to obtain their coordinates, using `hiddenDomains`. Perhaps the number of peaks predicted in each region across each sample may be clues to what cell type each sample is.
 
+Go back to CoCalc, and using the terminal go to the directory `EpiSyStem_Workshop_Files/sorted_bams_filtered` (in case you are not there). 
 
-After running `hiddenDomains`, visualize the `.bed` files by downloading them onto your computer and opening them with `IGV`. 
-
-> ###  Hands-on: Peak calling
+> ###  Hands-on: Peak calling with  `hiddenDomains`
 >
-> 1. Calling peaks with `hiddenDomains`
->    > Required inputs:
->    >     -g Size of chromosomes for the mouse genome.
+> 1. Calling peaks with `hiddenDomains`. Remember you can write `hiddenDomains` by itself in the terminal and a list of options will be shown. For now, we need the folloing required inputs: 
+>    >     -g Size of chromosomes for the mouse genome. Can you find this file?
 >    >
->    >     -q Minimum MAPQ score. What is an appropriate MAPQ score to use? A low MAPQ score may include reads that are poor quality, while high MAPQ score keeps only high quality reads. Calculate, for each `bam` file, how many reads are assigned at each MAPQ score. Hint: the MAPQ score of each read is found in the fifth column of the bam file. Hint 2: UNIX tools such as `cut` or `awk`, `sort`, `uniq` can do this calculation quickly. 
+>    >     -q Minimum MAPQ score. What is an appropriate MAPQ score to use? A low MAPQ score may include reads that are poor quality, while high MAPQ score keeps only high quality reads. For now, we will keep reads with a quality threshold equal to 60.
 >    >
 >    >     -p A threshold to remove domains called with probabilities less than `p`. Set to a value such as 0.5. You can play around with this value to see how it changes the output.
 >    >     -b minimum length. Use the default 1000 bp.
+>  Run this for all the bam files. 
 >
 >    > ### Questions
 >    >
@@ -295,6 +291,7 @@ After running `hiddenDomains`, visualize the `.bed` files by downloading them on
 >    H3K4me3_cluster_6 and H3K4me1_cluster_11 have correlated peaks, high in B-cell-specific regions.
 >    ![Ebf1_region.png](images/Ebf1_region_hd.png)
 
+After running `hiddenDomains`, visualize the `.bed` files by downloading them onto your computer and opening them with `IGV`. 
 
 # Conclusion
 
