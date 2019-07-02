@@ -106,7 +106,6 @@ Sequence quality control is therefore an essential first step in your analysis. 
 
 We obtain sequences corresponding to a portion of DNA linked to the histone mark of interest, H3K4me3 in this case. H3K4me3 is associated with active chromatin. It would be interesting to know if there is a difference across cell types.
 
-
 ## Running BWA
 
 Mapping requires a database of the genome to which you are mapping. These files often are downloaded from publicly available genome browsers such as [Ensembl](https://www.ensembl.org/index.html) or [UCSC Genome Browser](https://genome-euro.ucsc.edu). We have already downloaded the mouse genome (genome assembly `mm10`) and created an index used for mapping. The index file is used often in mapping programs to allow fast and efficient access to the large genome. 
@@ -139,16 +138,15 @@ Mapping requires a database of the genome to which you are mapping. These files 
 >    > - Have a look at the first 67 lines of your `sam` file. What do you see? 
 >    > - How do we see the length of each chromosome used in the mapping? 
 >    > 
->    > Find all the lines in the `sam` file containing mapping information for the read with name  
+>    > Find all the lines in the `sam` file containing mapping information for the read with name: 
 >    > ```bash 
 >    > Is:NS500414;RN:518;Fc:H2GV2BGX9;La:1;Ti:11101;CX:23815;CY:1073;Fi:N;CN:0;aa:CACTCA;aA:CACTCA;aI:32;LY:PZ-BM-m1-H3K4me1-2_H2GV2BGX9_S11;RX:CCT;RQ:GGG;BI:175;bc:TGCTAATG;BC:TGCTAATG;QT:GGKKKKKK;MX:NLAIII384C8U3
 >    > ```
->    > - What is each line? 
+>    > - What is each line? Help: visit this ([link](https://en.wikipedia.org/wiki/SAM_%28file_format%29))
 >    > - Where has this read been mapped? 
 >    > - Which is the quality of the mapping? 
->    > Help: visit this ([link](https://en.wikipedia.org/wiki/SAM_%28file_format%29))
->    >
->    > Now have a look at the mapping information for read 
+>    > 
+>    > Now have a look at the mapping information for read:
 >    > ```bash 
 >    > Is:NS500414;RN:518;Fc:H2GV2BGX9;La:1;Ti:11101;CX:23241;CY:4823;Fi:N;CN:0;aa:CACTCA;aA:CACTCA;aI:32;LY:PZ-BM-m1-H3K4me1-2_H2GV2BGX9_S11;RX:ACA;RQ:GGG;BI:175;bc:TGCTAATG;BC:TGCTAATG;QT:GGKKKKKK;MX:NLAIII384C8U3
 >    > ```
@@ -173,18 +171,28 @@ The `sam` file is so important that is has a command line on its own to speed up
 > ```bash
 > samtools view demux_map.sam
 > ```
-> ?
+> ? 
+> Importantly, commands in the terminal can be concatenated (or pipped). For that, the character `|` is used. For instance, type to following examples in the terminal: 
+> ```bash
+> samtools view demux_map.sam | wc
+> samtools view demux_map.sam | head
+> ```
+> 
 > If you now type: 
 > ```bash
 > samtools view 
 > ```
-> a full list of new options is displayed. 
-
-
-   
-
+> a full list of new options is displayed. Answer the following questions using `samtools view` with the different options. You might need to pipe some commands to get the answer. 
+> > ### Questions
+> > - How many reads do have the flag 99? 
+> > - How many reads do not have the flag 99?
+> > - How many reads do have a mapping quality equal or higher than 60?
+> > - List the first 5 reads that have a mapping quality equal or higher than 60 with a flag equal to 163. 
+> > - Print the SAM header only. 
 
 ## From SAM to BAM format
+
+
 
 ## Correlation between samples
 
