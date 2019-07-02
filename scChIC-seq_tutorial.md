@@ -172,10 +172,11 @@ The `sam` file is so important that is has a command line on its own to speed up
 > samtools view demux_map.sam
 > ```
 > ? 
-> Importantly, commands in the terminal can be concatenated (or pipped). For that, the character `|` is used. For instance, type to following examples in the terminal: 
+> Importantly, commands in the terminal can be concatenated (or pipped). For that, the character `|` is used. For instance, type to following examples in the terminal. What are we getting in each case? 
 > ```bash
 > samtools view demux_map.sam | wc
 > samtools view demux_map.sam | head
+> samtools view demux_map.sam | grep 'BC:CGTAGTGC'
 > ```
 > 
 > If you now type: 
@@ -189,10 +190,19 @@ The `sam` file is so important that is has a command line on its own to speed up
 > > - How many reads do have a mapping quality equal or higher than 60?
 > > - List the first 5 reads that have a mapping quality equal or higher than 60 with a flag equal to 163. 
 > > - Print the SAM header only. 
+> > - How many reads with a mapping quality equal or higher than 60 do have the string `BC:CGTAGTGC` in their name? 
 
 ## From SAM to BAM format
 
-
+Once you get used, the `sam` format is very convenient to explore how your sequencing data maps to the reference. However, the files become very big very fast. For this reason, the `bam` file was invented, which contains the same information as the `sam` file but in a compress manner. To convert your `sam` file into a `bam` file, type in the terminal:
+```bash
+samtools view -Sb demux_map.sam > demux_max.bam
+```
+, and you will see that the new `bam` file has been created (use `ls` to check). Commands such as `cat, head, tail` will not work on the `bam` file, but they do in combination with `samtools`. For instance, compare the outputs of the two following command lines:
+```bash
+head demux_max.bam
+samtools view demux_max.bam | head
+```
 
 ## Correlation between samples
 
