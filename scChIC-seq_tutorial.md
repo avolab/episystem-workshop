@@ -264,34 +264,21 @@ Go back to CoCalc, and using the terminal go to the directory `EpiSyStem_Worksho
 
 > ###  Hands-on: Peak calling with  `hiddenDomains`
 >
-> 1. Calling peaks with `hiddenDomains`. Remember you can write `hiddenDomains` by itself in the terminal and a list of options will be shown. For now, we need the folloing required inputs: 
->    >     -g Size of chromosomes for the mouse genome. Can you find this file?
->    >
->    >     -q Minimum MAPQ score. What is an appropriate MAPQ score to use? A low MAPQ score may include reads that are poor quality, while high MAPQ score keeps only high quality reads. For now, we will keep reads with a quality threshold equal to 60.
->    >
->    >     -p A threshold to remove domains called with probabilities less than `p`. Set to a value such as 0.5. You can play around with this value to see how it changes the output.
->    >     -b minimum length. Use the default 1000 bp.
+> 1. Calling peaks with `hiddenDomains`. Remember you can write `hiddenDomains` by itself in the terminal and a list of options will be shown. You can also find more information [here](http://hiddendomains.sourceforge.net). For now, we need the folloing required inputs: 
+>    >  -g Size of chromosomes for the mouse genome. Can you find this file?
+>    >  -q Minimum MAPQ score. What is an appropriate MAPQ score to use? A low MAPQ score may include reads that are poor quality, while high MAPQ score keeps only high quality reads. For now, we will keep reads with a quality threshold equal to 60.
+>    >  -p A threshold to remove domains called with probabilities less than `p`. Set to a value such as 0.5. You can play around with this value to see how it changes the output.
+>    >  -b minimum length. Use the default 1000 bp.
 >  Run this for all the bam files. 
 >
 >    > ### Questions
->    >
 >    > 1. Which type of files were generated? What do they include?
 >    > 2. How do the peaks called differ between samples? Can you infer cell types based on this analysis? 
->    > 
->    > ### Solutions
 >    >
->    > 1. [See hiddenDomains manual](http://hiddendomains.sourceforge.net)
->    > 2. 
->    >
->    
->    H3K4me3_cluster_3 and H3K4me1_cluster_2 have correlated peaks, high in erythroblast-specific regions. 
->    ![Hbb_region.png](images/Hbb_region_hd.png)
->    H3K4me3_cluster_5 and H3K4me1_cluster_5 have correlated peaks, high in granulocyte-specific regions.
->    ![S100a8_region.png](images/S100a_region_hd.png)
->    H3K4me3_cluster_6 and H3K4me1_cluster_11 have correlated peaks, high in B-cell-specific regions.
->    ![Ebf1_region.png](images/Ebf1_region_hd.png)
-
-After running `hiddenDomains`, visualize the `.bed` files by downloading them onto your computer and opening them with `IGV`. 
+> 2. Download all the `BED` files that have been produced by `hiddenDomains` in your computer and open them using `IGV`. For that, you need to go the tab `Files` in the top of your screen with your mouse, and navigate throught the directories until you find the `BED` files. Once there, select them, create a compress folder, and download that folder onto your computer. In your computer, you can unzip the folder and load the files in `IGV`. 
+>    > ### Questions
+>    > 1. How do the cell-type specific regions look like?
+>    > 2. How do the peaks called differ between samples? Can you infer cell types based on this analysis? 
 
 # Conclusion
 
