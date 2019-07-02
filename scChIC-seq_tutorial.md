@@ -1,42 +1,44 @@
----
+EpiSyStem MS & Single Cell Workshop: Hands-On Tutorial
+==================
+
 
 Objectives:
 
-    - Inspect the read quality
-    - Map reads on a reference genome
-    - Compare coverage files
-    - Call enriched regions or peaks
-    - Infer cell-type specific histone modification levels in the bone marrow
+- Inspect the read quality
+- Map reads on a reference genome
+- Compare coverage files
+- Call enriched regions or peaks
+- Infer cell-type specific histone modification levels in the bone marrow
     
-Estimated time required: "3h"
+Estimated time required: approximately 3 hours.
 
 Take home messages:
 
-    - Sequence affinity of PA-MNAse can be seen in the fastq files.
-    - Although scChIC-seq data is sparse at the single cell level, there is enough information to cluster cells into pseudobulk samples that reflect cell-type specific chromatin structures.
-    - We can define cell-type specific genomic regions by finding enriched signal along genomic regions.
+- Sequence affinity of PA-MNAse can be seen in the fastq files.
+- Although scChIC-seq data is sparse at the single cell level, there is enough information to cluster cells into pseudobulk samples that reflect cell-type specific chromatin structures.
+- We can define cell-type specific genomic regions by finding enriched signal along genomic regions.
     
 Contributors:
 
-    - Anna Alemany
-    - Buys de Barbanson
-    - Vivek Bhardwaj
-    - Christoph Geisenberger
-    - Alexander van Oudenaarden
-    - Jake Yeung
-    - Peter Zeller
+- Anna Alemany
+- Buys de Barbanson
+- Vivek Bhardwaj
+- Christoph Geisenberger
+- Alexander van Oudenaarden
+- Jake Yeung
+- Peter Zeller
     
 Software needed (hopefully already installed):
 
-    - fastqc
-    - samtools
-    - deeptools
-    - bwa
-    - hiddenDomains
-    - macs2
-    - R
-    - perl
-    - python
+- fastqc
+- samtools
+- deeptools
+- bwa
+- hiddenDomains
+- macs2
+- R
+- perl
+- python
 
 
 # Introduction
@@ -51,7 +53,8 @@ Binding certain proteins to each of the eight histone proteins may modify the ch
 ![Fadloun et al, 2013](images/histone_modifications.jpg "Source: Fadloun et al, 2013")
 
 
-In the upcoming tutorial, we will look at the activator marks H3K4me1 and H3K4me3 scChIC-seq data from mouse bone marrow. We have already performed a dimensionality reduction ([using a method called Latent Dirichlet Allocation](https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation)) on the scChIC-seq in order to cluster cells ([using a method called Louvain community detection](https://en.wikipedia.org/wiki/Louvain_modularity)) with similar histone modification profiles.  The cell-cell relationships calculated from this analysis can be visualized in a 2-dimensional plot: 
+In the upcoming tutorial, we will look at the activator marks H3K4me1 and H3K4me3 scChIC-seq data from mouse bone marrow. We have already performed a dimensionality reduction ([using a method called Latent Dirichlet Allocation]
+(https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation)) on the scChIC-seq in order to cluster cells ([using a method called Louvain community detection](https://en.wikipedia.org/wiki/Louvain_modularity)) with similar histone modification profiles.  The cell-cell relationships calculated from this analysis can be visualized in a 2-dimensional plot: 
 
 ![R2 per base seq content](images/H3K4me1_umap.png)
 
@@ -168,11 +171,10 @@ The `sam` file is so important that is has a command line on its own to speed up
 > > - How many reads are not mapped at all?
 > > - In how many pair reads only one of the reads is mapped? 
 
-> We will now inspect the `view` option. What happens when you type in the terminal: 
+> We will now inspect the `view` option. What happens when you type the following in the terminal?
 > ```bash
 > samtools view demux_map.sam
 > ```
-> ? 
 > Importantly, commands in the terminal can be concatenated (or pipped). For that, the character `|` is used. For instance, type to following examples in the terminal. What are we getting in each case? 
 > ```bash
 > samtools view demux_map.sam | wc
@@ -233,7 +235,7 @@ In this tutorial we are interested in assessing H3K4me3 and H3K4me1 scChIC-seq s
 > You can visualize the output by using the command `open` in the terminal. To go back to the terminal, select the corresponding tab in the top of your screen. 
 >    
 > > ### Questions
-> > - From the correlation plot, can you infer which clusters correspond to the same cell type in H3K4me1 and H3K4me3?>  
+> > - From the correlation plot, can you infer which clusters correspond to the same cell type in H3K4me1 and H3K4me3?
 
 # Step 4: Exploring `bam` files on the IGV browser
 
@@ -242,7 +244,7 @@ For each modification, we have clustered single cells into three separate `bam` 
 
 Download the `.bam` and `.bam.bai` files onto your computer (`.bam.bai` files are important for hte IGV browser to be able to read the contents of the `bam` file). In order to download the files, select with your mouse the `Files` tab, go to the `EpiSyStem_Workshop_Files/sorted_bams_filtered` folder, select all the files present and create a zip folder. Next, download the zip folder onto yoru computer and unzip it. 
 
-Open first the 3 `bam` files belonging to the modification *H3K4me1* using `IGV`, which should already be installed on your computer. And explore the following cell-type specific regions:
+Open first the 3 `bam` files belonging to the modification H3K4me1 using IGV, which should already be installed on your computer. And explore the following cell-type specific regions:
 ```
 chr7    114972165       116898716
 chr7    103325741       104425479
@@ -250,12 +252,13 @@ chr3    90523036        90870443
 chr11   44114099        45269522
 ```
 
+
 > ### Questions:
 > 1. Can you infer which clusters correspond to which cell types based on the coverage around the four regions?
 > 
-> Hint: Hbb is a standard marker for erythroblast, S100a8 is a standard marker for granulocytes, and Ebf1 is a standard markers for B cells.
+> Hint: *Hbb* is a standard marker for erythroblast, *S100a8* is a standard marker for granulocytes, and *Ebf1* is a standard markers for B cells.
 
-Repeat the same procedure with the modification *H3K4me3*. 
+Repeat the same procedure with the modification H3K4me3. 
 
 # Step 5: Detecting enriched regions (peak calling)
 
