@@ -21,6 +21,7 @@ Contributors:
     - Anna Alemany
     - Buys de Barbanson
     - Vivek Bhardwaj
+    - Christoph Geisenberger
     - Alexander van Oudenaarden
     - Jake Yeung
     - Peter Zeller
