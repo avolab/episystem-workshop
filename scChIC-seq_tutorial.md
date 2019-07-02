@@ -141,7 +141,11 @@ Mapping requires a database of the genome to which you are mapping. These files 
 >    > ```bash 
 >    > Is:NS500414;RN:518;Fc:H2GV2BGX9;La:1;Ti:11101;CX:23815;CY:1073;Fi:N;CN:0;aa:CACTCA;aA:CACTCA;aI:32;LY:PZ-BM-m1-H3K4me1-2_H2GV2BGX9_S11;RX:CCT;RQ:GGG;BI:175;bc:TGCTAATG;BC:TGCTAATG;QT:GGKKKKKK;MX:NLAIII384C8U3
 >    > ```
->    > What is each line? Where has this read been mapped? Which is the quality of the mapping? Help: visit this ([link](https://en.wikipedia.org/wiki/SAM_%28file_format%29))
+>    > - What is each line? 
+>    > - Where has this read been mapped? 
+>    > - Which is the quality of the mapping? 
+>    > Help: visit this ([link](https://en.wikipedia.org/wiki/SAM_%28file_format%29))
+>    >
 >    > Now have a look at the mapping information for read 
 >    > ```bash 
 >    > Is:NS500414;RN:518;Fc:H2GV2BGX9;La:1;Ti:11101;CX:23241;CY:4823;Fi:N;CN:0;aa:CACTCA;aA:CACTCA;aI:32;LY:PZ-BM-m1-H3K4me1-2_H2GV2BGX9_S11;RX:ACA;RQ:GGG;BI:175;bc:TGCTAATG;BC:TGCTAATG;QT:GGKKKKKK;MX:NLAIII384C8U3
@@ -153,7 +157,7 @@ Mapping requires a database of the genome to which you are mapping. These files 
 
 The `sam` file is so important that is has a command line on its own to speed up its inspection. This is `samtools`. First, let's type `samtools` in the terminal with no arguments: a summary of all the options will be displayed. 
 
-> We will first inspect the `flagstat` option: 
+> We will first inspect the `flagstat` option. Type in the terminal: 
 > ```bash
 > samtools flagstat demux_map.sam
 > ```
@@ -163,11 +167,16 @@ The `sam` file is so important that is has a command line on its own to speed up
 > > - How many reads are not mapped at all?
 > > -In how many pair reads only one of the reads is mapped? 
 
-> We will now inspect the `view` option: 
+> We will now inspect the `view` option. What happens when you type in the terminal: 
 > ```bash
-> samtools flagstat demux_map.sam
+> samtools view demux_map.sam
 > ```
-> What is the output telling us? 
+> ?
+> If you now type: 
+> ```bash
+> samtools view 
+> ```
+> a full list of new options is displayed. 
 
 
    
