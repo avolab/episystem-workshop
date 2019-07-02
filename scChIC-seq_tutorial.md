@@ -53,8 +53,7 @@ Binding certain proteins to each of the eight histone proteins may modify the ch
 ![Fadloun et al, 2013](images/histone_modifications.jpg "Source: Fadloun et al, 2013")
 
 
-In the upcoming tutorial, we will look at the activator marks H3K4me1 and H3K4me3 scChIC-seq data from mouse bone marrow. We have already performed a dimensionality reduction ([using a method called Latent Dirichlet Allocation]
-(https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation)) on the scChIC-seq in order to cluster cells ([using a method called Louvain community detection](https://en.wikipedia.org/wiki/Louvain_modularity)) with similar histone modification profiles.  The cell-cell relationships calculated from this analysis can be visualized in a 2-dimensional plot: 
+In the upcoming tutorial, we will look at the activator marks H3K4me1 and H3K4me3 scChIC-seq data from mouse bone marrow. We have already performed a dimensionality reduction ([using a method called Latent Dirichlet Allocation](https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation)) on the scChIC-seq in order to cluster cells ([using a method called Louvain community detection](https://en.wikipedia.org/wiki/Louvain_modularity)) with similar histone modification profiles.  The cell-cell relationships calculated from this analysis can be visualized in a 2-dimensional plot: 
 
 ![R2 per base seq content](images/H3K4me1_umap.png)
 
@@ -68,9 +67,9 @@ All file paths are relative to the data directory: `$HOME/Handouts/EpiSyStem_Wor
 Remember you can navigate around the diretctories using `cd` and explore the files present in each direction using `ls`. 
 
 - `fastq_raw/raw_fastq_R${read}.fastq` : raw `fastq` files to see what raw data looks like before demultiplexing. You already had a look at these in the previous tutorial. ${read} denotes a bash variable that in this case can be equal to either 1 or 2. 
-- `fastq_full/demultiplexedR${read}_10000rows.fastq.gz` : demultiplexed `fastq` files for quality control checks before mapping. Again, ${read} is a bash variable equal to 1 or 2. Note that this fastq files are zipped. 
+- `fastq_full/demultiplexedR${read}_10000rows.fastq.gz` : demultiplexed `fastq` files for quality control checks before mapping. Again, `${read}` is a bash variable equal to 1 or 2. Note that this fastq files are zipped. 
 - `references/Mus_musculus.GRCm38.dna_rm.primary_assembly.fa`: reference genome `fasta` file.
-- `sorted_bams_filtered/${histone_mark}_cluster_${clstrID}.filtered.bam` : single cell scChIC-seq profiles grouped by clusters. Here, ${histone_mark} is either H3K4me1 or H3K4me3; and ${clstrID} will be either 2, 5 or 11 for H3K4me1 and 3, 5 or 6 for H3K4me3. We have already assigned cells to clusters for you, you just have to infer the biological meaning of these clusters (i.e., infer the cell type). We will use these to visualize `bam` files with `IGV`, explore how to calculate number of reads by `MAPQ` quality, and do peak calling.  `bam` files are subset to include only four main regions to reduce file size (defined in `regions/regions_to_filter.txt`).
+- `sorted_bams_filtered/${histone_mark}_cluster_${clstrID}.filtered.bam` : single cell scChIC-seq profiles grouped by clusters. Here, `${histone_mark}` is either H3K4me1 or H3K4me3; and `${clstrID}` will be either 2, 5 or 11 for H3K4me1 and 3, 5 or 6 for H3K4me3. We have already assigned cells to clusters for you, you just have to infer the biological meaning of these clusters (i.e., infer the cell type). We will use these to visualize `bam` files with `IGV`, explore how to calculate number of reads by `MAPQ` quality, and do peak calling.  `bam` files are subset to include only four main regions to reduce file size (defined in `regions/regions_to_filter.txt`).
 - `regions/regions_to_filter.txt` : File containing the four genomic regions that contain signal in the `bam` files. 
 - `sorted_bigwigs/${histone_mark}_cluster_${clstrID}.bw` : `bigwig` files of scChIC-seq profiles, providing genome-wide coverage of scChIC-seq grouped by their clusters (pseudobulk). We will use `bigwig` files to correlate across pseudobulk samples and visualize the on the `IGV`.
 - `chromsizes/chromsizes.${genome}.filt.txt` : size of genomes which are used as input in `hiddenDomains`. 
@@ -120,17 +119,18 @@ Mapping requires a database of the genome to which you are mapping. These files 
 >
 > 1. Run `bwa` on the fastq files, using an mm10 reference genome (the forward slash `\` is only used to split a long single line into multiple lines, so the long command can be printed on a PDF page).
 > 
+>
 > ```bash
 > bwa mem ../references/Mus_musculus.GRCm38.dna_rm.primary_assembly.fa \
-
 > demultiplexedR1_10000rows.fastq.gz demultiplexedR2_10000rows.fastq.gz \
-
-> demux_map.sam
-> ```
+> demux_map.sam```
 >
-> The output file containing all the mapping information is a `sam` file (in the example above, we gave it the name `demux_map.sam`, but you can change it an give it another name). An explanation of  the SAM format can be found ([HERE](https://en.wikipedia.org/wiki/SAM_%28file_format%29)).
+> The output file containing all the mapping information is a `sam` file (in the example above, we gave it the name `demux_map.sam`, but you can change it an give it another name). An explanation of  the SAM format can be found on [wikipedia](https://en.wikipedia.org/wiki/SAM_%28file_format%29).
 > 
-> 2. Inspect the reference file, which can be found in `Handouts/EpiSyStem_Workshop_Files/references` with the name `Mus_musculus.GRCm38.dna_rm.primary_assembly.fa`. 
+> 2. Inspect the reference file, which can be found in:
+> 
+>   `Handouts/EpiSyStem_Workshop_Files/references` with the name `Mus_musculus.GRCm38.dna_rm.primary_assembly.fa`. 
+>
 > There is another command line, `grep`, which is very usefull to find string patterns in your files. Using the `cd` command, go to the `Handouts/EpiSyStem_Workshop_Files/references` directory, and type there:
 > ```bash 
 > grep '>' Mus_musculus.GRCm38.dna_rm.primary_assembly.fa
@@ -149,11 +149,8 @@ Mapping requires a database of the genome to which you are mapping. These files 
 >    > Find all the lines in the `sam` file containing mapping information for the read with name (long line is split into multiple lines with `\`): 
 >    > ```bash 
 >    > Is:NS500414;RN:518;Fc:H2GV2BGX9;La:1;Ti:11101;CX:23815;CY:1073;\
-
 >    > Fi:N;CN:0;aa:CACTCA;aA:CACTCA;aI:32;\
-
 >    > LY:PZ-BM-m1-H3K4me1-2_H2GV2BGX9_S11;RX:CCT;RQ:GGG;BI:175;bc:\
-
 >    > TGCTAATG;BC:TGCTAATG;QT:GGKKKKKK;MX:NLAIII384C8U3
 >    > ```
 >    > - What is each line? Help: visit this ([link](https://en.wikipedia.org/wiki/SAM_%28file_format%29))
@@ -163,11 +160,8 @@ Mapping requires a database of the genome to which you are mapping. These files 
 >    > Now have a look at the mapping information for read:
 >    > ```bash 
 >    > Is:NS500414;RN:518;Fc:H2GV2BGX9;La:1;Ti:11101;CX:23241;\
-
 >    > CY:4823;Fi:N;CN:0;aa:CACTCA;aA:CACTCA;aI:32;\ 
-
 >    > LY:PZ-BM-m1-H3K4me1-2_H2GV2BGX9_S11;RX:ACA;RQ:GGG;BI:175;\
-
 >    > bc:TGCTAATG;BC:TGCTAATG;QT:GGKKKKKK;MX:NLAIII384C8U3
 >    > ```
 >    > - Is it mapped? Where? What is the quality of the mapping? 
@@ -236,15 +230,15 @@ In this tutorial we are interested in assessing H3K4me3 and H3K4me1 scChIC-seq s
 > 1. Find the `bigwig` files (wit extension `.bw`) in the `EpiSyStem_Workshop_Files` directory. You should find two files for each chromatin modification (H3K4me1 clusters 2 and 5; for H3K4me3 clusters 3 and 5).
 >
 > 2. Compare all bigwigs using `multiBigwigSummary`. You can type `multiBigwigSummary` in the terminal to see all the options. We will use the following options:
->    - *"Choose computation mode"*: `Bins`
->    - *"Bin size in bp"*: `100000`
->    - *"Input bigwig files"*: the four imported `bigwig` files
->    - *"Output file"*: results.npz
+>    - "Choose computation mode": `Bins`
+>    - "Bin size in bp": `100000`
+>    - "Input bigwig files": the four imported `bigwig` files
+>    - "Output file": results.npz
 >
 >    Using these parameters, the tool will take bins of 100000 bp. For each bin the overlapping reads in each sample will be computed and stored into a matrix.
 >
 > 4. Check results using `plotCorrelation`. Remember that you can type `plotCorrelation` by itself in the terminal to see the list of options. Use to following parameters to explore the file `results.npz`:
->    - *"Correlation method"*: `Pearson` or `Spearman` (which do you think is more appropriate here? Check by inspecting the scatterplots)
+>    - "Correlation method": `Pearson` or `Spearman` (which do you think is more appropriate here? Check by inspecting the scatterplots)
 >    - Plot `heatmap` or `scatterplot`.
 >    - In the scatter plot, you can plot output in log scale (--log1p) for visualization. What happens if you do not use this option?
 > 
@@ -256,7 +250,7 @@ In this tutorial we are interested in assessing H3K4me3 and H3K4me1 scChIC-seq s
 # Step 4: Exploring `bam` files on the IGV browser
 
 Now, go to the directory `EpiSyStem_Workshop_Files/sorted_bams_filtered`, which contains a 6 different `bam` files. These files have been prepared by the instructors and only contain only reads falling in specific genomic regions, in order to reduce the file size. 
-For each modification, we have clustered single cells into three separate `bam` files, associated with one of three cell types: *erythroblast*, *granulocytes*, and *B-cells*. Your job is to explore which `bam` file is associated with which cell type by looking at cell-type specific regions in the genome browser. 
+For each modification, we have clustered single cells into three separate `bam` files, associated with one of three cell types: erythroblast, granulocytes, and B-cells. Your job is to explore which `bam` file is associated with which cell type by looking at cell-type specific regions in the genome browser. 
 
 Download the `.bam` and `.bam.bai` files onto your computer (`.bam.bai` files are important for hte IGV browser to be able to read the contents of the `bam` file). In order to download the files, select with your mouse the `Files` tab, go to the `EpiSyStem_Workshop_Files/sorted_bams_filtered` folder, select all the files present and create a zip folder. Next, download the zip folder onto yoru computer and unzip it. 
 
@@ -287,11 +281,16 @@ Go back to CoCalc, and using the terminal go to the directory (in case you are n
 
 > ###  Hands-on: Peak calling with  `hiddenDomains`
 >
-> 1. Calling peaks with `hiddenDomains`. Remember you can write `hiddenDomains` by itself in the terminal and a list of options will be shown. You can also find more information [here](http://hiddendomains.sourceforge.net). For now, we need the folloing required inputs: 
->    >  -g Size of chromosomes for the mouse genome. Can you find this file?
->    >  -q Minimum MAPQ score. What is an appropriate MAPQ score to use? A low MAPQ score may include reads that are poor quality, while high MAPQ score keeps only high quality reads. For now, we will keep reads with a quality threshold equal to 60.
->    >  -p A threshold to remove domains called with probabilities less than `p`. Set to a value such as 0.5. You can play around with this value to see how it changes the output.
->    >  -b minimum length. Use the default 1000 bp.
+> 1. Calling peaks with `hiddenDomains`. Remember you can write `hiddenDomains` by itself in the terminal and a list of options will be shown. You can also find more information [here](http://hiddendomains.sourceforge.net). For now, we need the following required inputs: 
+
+>	-  -g Size of chromosomes for the mouse genome. Can you find this file?
+
+>	-  -q Minimum MAPQ score. What is an appropriate MAPQ score to use? A low MAPQ score may include reads that are poor quality, while high MAPQ score keeps only high quality reads. For now, we will keep reads with a quality threshold equal to 60.
+
+>   -  -p A threshold to remove domains called with probabilities less than `p`. Set to a value such as 0.5. You can play around with this value to see how it changes the output.
+
+>   -  -b minimum length. Use the default 1000 bp.
+
 >  Run this for all the bam files. 
 >
 >    > ### Questions
