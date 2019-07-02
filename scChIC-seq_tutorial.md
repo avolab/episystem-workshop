@@ -299,6 +299,7 @@ Go back to CoCalc, and using the terminal go to the directory (in case you are n
 >    > 2. How do the peaks called differ between samples? Can you infer cell types based on this analysis? 
 >    >
 > 2. Download all the `BED` files that have been produced by `hiddenDomains` in your computer and open them using `IGV`. For that, you need to go the tab `Files` in the top of your screen with your mouse, and navigate throught the directories until you find the `BED` files. Once there, select them, create a compress folder, and download that folder onto your computer. In your computer, you can unzip the folder and load the files in `IGV`. 
+
 >    > ### Questions
 >    > 1. How do the cell-type specific regions look like?
 >    > 2. How do the peaks called differ between samples? Can you infer cell types based on this analysis? 
