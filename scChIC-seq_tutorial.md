@@ -138,10 +138,13 @@ Mapping requires a database of the genome to which you are mapping. These files 
 >    > Have a look at the first 67 lines of your `sam` file. What do you see? 
 >    > How do we see the length of each chromosome used in the mapping? 
 >    > Find all the lines in the `sam` file containing mapping information for the read with name  
->    > ```bash Is:NS500414;RN:518;Fc:H2GV2BGX9;La:1;Ti:11101;CX:23815;CY:1073;Fi:N;CN:0;aa:CACTCA;aA:CACTCA;aI:32;LY:PZ-BM-m1-H3K4me1-2_H2GV2BGX9_S11;RX:CCT;RQ:GGG;BI:175;bc:TGCTAATG;BC:TGCTAATG;QT:GGKKKKKK;MX:NLAIII384C8U3```
+>    > ```bash 
+>    > Is:NS500414;RN:518;Fc:H2GV2BGX9;La:1;Ti:11101;CX:23815;CY:1073;Fi:N;CN:0;aa:CACTCA;aA:CACTCA;aI:32;LY:PZ-BM-m1-H3K4me1-2_H2GV2BGX9_S11;RX:CCT;RQ:GGG;BI:175;bc:TGCTAATG;BC:TGCTAATG;QT:GGKKKKKK;MX:NLAIII384C8U3
+>    > ```
 >    > What is each line? Where has this read been mapped? Which is the quality of the mapping? Help: visit this ([link](https://en.wikipedia.org/wiki/SAM_%28file_format%29))
 >    > Now have a look at the mapping information for read 
->    > ```bash Is:NS500414;RN:518;Fc:H2GV2BGX9;La:1;Ti:11101;CX:23241;CY:4823;Fi:N;CN:0;aa:CACTCA;aA:CACTCA;aI:32;LY:PZ-BM-m1-H3K4me1-2_H2GV2BGX9_S11;RX:ACA;RQ:GGG;BI:175;bc:TGCTAATG;BC:TGCTAATG;QT:GGKKKKKK;MX:NLAIII384C8U3
+>    > ```bash 
+>    > Is:NS500414;RN:518;Fc:H2GV2BGX9;La:1;Ti:11101;CX:23241;CY:4823;Fi:N;CN:0;aa:CACTCA;aA:CACTCA;aI:32;LY:PZ-BM-m1-H3K4me1-2_H2GV2BGX9_S11;RX:ACA;RQ:GGG;BI:175;bc:TGCTAATG;BC:TGCTAATG;QT:GGKKKKKK;MX:NLAIII384C8U3
 >    > ```
 >    > - Is it mapped? Where? What is the quality of the mapping? 
 >    >
