@@ -118,10 +118,14 @@ Mapping requires a database of the genome to which you are mapping. These files 
 
 > ### Hands-on: Mapping
 >
-> 1. Run `bwa` on the fastq files, using an mm10 reference genome.
+> 1. Run `bwa` on the fastq files, using an mm10 reference genome (the forward slash `\` is only used to split a long single line into multiple lines, so the long command can be printed on a PDF page).
 > 
 > ```bash
-> bwa mem ../references/Mus_musculus.GRCm38.dna_rm.primary_assembly.fa demultiplexedR1_10000rows.fastq.gz demultiplexedR2_10000rows.fastq.gz > demux_map.sam
+> bwa mem ../references/Mus_musculus.GRCm38.dna_rm.primary_assembly.fa \
+
+> demultiplexedR1_10000rows.fastq.gz demultiplexedR2_10000rows.fastq.gz \
+
+> demux_map.sam
 > ```
 >
 > The output file containing all the mapping information is a `sam` file (in the example above, we gave it the name `demux_map.sam`, but you can change it an give it another name). An explanation of  the SAM format can be found ([HERE](https://en.wikipedia.org/wiki/SAM_%28file_format%29)).
@@ -142,9 +146,15 @@ Mapping requires a database of the genome to which you are mapping. These files 
 >    > - Have a look at the first 67 lines of your `sam` file. What do you see? 
 >    > - How do we see the length of each chromosome used in the mapping? 
 >    > 
->    > Find all the lines in the `sam` file containing mapping information for the read with name: 
+>    > Find all the lines in the `sam` file containing mapping information for the read with name (long line is split into multiple lines with `\`): 
 >    > ```bash 
->    > Is:NS500414;RN:518;Fc:H2GV2BGX9;La:1;Ti:11101;CX:23815;CY:1073;Fi:N;CN:0;aa:CACTCA;aA:CACTCA;aI:32;LY:PZ-BM-m1-H3K4me1-2_H2GV2BGX9_S11;RX:CCT;RQ:GGG;BI:175;bc:TGCTAATG;BC:TGCTAATG;QT:GGKKKKKK;MX:NLAIII384C8U3
+>    > Is:NS500414;RN:518;Fc:H2GV2BGX9;La:1;Ti:11101;CX:23815;CY:1073;\
+
+>    > Fi:N;CN:0;aa:CACTCA;aA:CACTCA;aI:32;\
+
+>    > LY:PZ-BM-m1-H3K4me1-2_H2GV2BGX9_S11;RX:CCT;RQ:GGG;BI:175;bc:\
+
+>    > TGCTAATG;BC:TGCTAATG;QT:GGKKKKKK;MX:NLAIII384C8U3
 >    > ```
 >    > - What is each line? Help: visit this ([link](https://en.wikipedia.org/wiki/SAM_%28file_format%29))
 >    > - Where has this read been mapped? 
@@ -152,7 +162,13 @@ Mapping requires a database of the genome to which you are mapping. These files 
 >    > 
 >    > Now have a look at the mapping information for read:
 >    > ```bash 
->    > Is:NS500414;RN:518;Fc:H2GV2BGX9;La:1;Ti:11101;CX:23241;CY:4823;Fi:N;CN:0;aa:CACTCA;aA:CACTCA;aI:32;LY:PZ-BM-m1-H3K4me1-2_H2GV2BGX9_S11;RX:ACA;RQ:GGG;BI:175;bc:TGCTAATG;BC:TGCTAATG;QT:GGKKKKKK;MX:NLAIII384C8U3
+>    > Is:NS500414;RN:518;Fc:H2GV2BGX9;La:1;Ti:11101;CX:23241;\
+
+>    > CY:4823;Fi:N;CN:0;aa:CACTCA;aA:CACTCA;aI:32;\ 
+
+>    > LY:PZ-BM-m1-H3K4me1-2_H2GV2BGX9_S11;RX:ACA;RQ:GGG;BI:175;\
+
+>    > bc:TGCTAATG;BC:TGCTAATG;QT:GGKKKKKK;MX:NLAIII384C8U3
 >    > ```
 >    > - Is it mapped? Where? What is the quality of the mapping? 
 >    >
@@ -264,7 +280,10 @@ Repeat the same procedure with the modification H3K4me3.
 
 We could see in the scChIC-seq data some enriched regions that differ across samples. We now would like to call these regions to obtain their coordinates, using `hiddenDomains`. Perhaps the number of peaks predicted in each region across each sample may be clues to what cell type each sample is.
 
-Go back to CoCalc, and using the terminal go to the directory `EpiSyStem_Workshop_Files/sorted_bams_filtered` (in case you are not there). 
+Go back to CoCalc, and using the terminal go to the directory (in case you are not there):
+
+`EpiSyStem_Workshop_Files/sorted_bams_filtered` 
+
 
 > ###  Hands-on: Peak calling with  `hiddenDomains`
 >
