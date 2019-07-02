@@ -165,7 +165,7 @@ The `sam` file is so important that is has a command line on its own to speed up
 > > - What is the output telling us? 
 > > - How many pair reads are mapped to the same chromosome in `demux_map.sam`? 
 > > - How many reads are not mapped at all?
-> > -In how many pair reads only one of the reads is mapped? 
+> > - In how many pair reads only one of the reads is mapped? 
 
 > We will now inspect the `view` option. What happens when you type in the terminal: 
 > ```bash
@@ -224,21 +224,17 @@ In this tutorial we are interested in assessing H3K4me3 and H3K4me1 scChIC-seq s
 >
 >    Using these parameters, the tool will take bins of 100000 bp. For each bin the overlapping reads in each sample will be computed and stored into a matrix.
 >
-> 4. **plotCorrelation** with the following parameters
+> 4. Check results using `plotCorrelation`. Remember that you can type `plotCorrelation` by itself in the terminal to see the list of options. Use to following parameters to explore the file `results.npz`:
 >    - *"Correlation method"*: `Pearson` or `Spearman` (which do you think is more appropriate here? Check by inspecting the scatterplots)
 >    - Plot `heatmap` or `scatterplot`.
->    - Plot output in log scale (--log1p) for visualization. 
->
+>    - In the scater plot, you can plot output in log scale (--log1p) for visualization. What happens if you do not use this option?
+> You can visualize the output by using the command `open` in the terminal. To go back to the terminal, select the corresponding tab in the top of your screen. 
 >    
 
 > ### Questions
 >
 > From the correlation plot, can you infer which clusters correspond to the same cell type in H3K4me1 and H3K4me3?
 >
->  ### Solution
->  1.
->  We find high correlation for H3K4me3 cluster 3 with H3K4me1 cluster 2, they may be measuring active histones in the same cell type. H3K4me1 cluster 5 and H3K4me1 cluster 5 also show high correlation, suggesting they may also be the same cell type. 
->  ![pearson_correlation_two_cell_types_two_marks.png](images/pearson_correlation_two_cell_types_two_marks.png)
 >  
 
 # Step 4: Exploring `bam` and `bigwig` files on the IGV browser
