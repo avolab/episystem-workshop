@@ -208,13 +208,13 @@ samtools view demux_max.bam | head
 
 We will compare genome-wide correlation of H3K4me3 and H3K4me1 for different cell clusters.
 
-To compute the correlation between the samples we are going to to use the QC modules of [deepTools](http://deeptools.readthedocs.io/), a software package for the QC, processing and analysis of NGS data. Before computing the correlation a time consuming step is required, which is to compute the read coverage (number of unique reads mapped at a given nucleotide) over a large number of regions from each of the inputed BAM files. For this we will use the tool **multiBamSummary** . Then, we use **plotCorrelation**  from deepTools to compute and visualize the sample correlation. This is a fast process that allows to quickly try different correlation methods and visual outputs.
+To compute the correlation between the samples we are going to to use the QC modules of [deepTools](http://deeptools.readthedocs.io/), a software package for the QC (quality check), processing and analysis of NGS data. Before computing the correlation a time consuming step is required, which is to compute the read coverage (number of unique reads mapped at a given nucleotide) over a large number of regions from each of the inputed BAM files. For this we will use the tool **multiBamSummary** . Then, we use **plotCorrelation**  from deepTools to compute and visualize the sample correlation. This is a fast process that allows to quickly try different correlation methods and visual outputs.
 
-Since in this tutorial we are interested in assessing H3K4me3 and H3K4me1 scChIC-seq samples. To save time, we have already done that and summarized the scChIC-seq data as bigwig files, which contains the read coverage.
+In this tutorial we are interested in assessing H3K4me3 and H3K4me1 scChIC-seq samples. To save time, we have already done that and summarized the scChIC-seq data as bigwig files, which contains the read coverage.
 
 > ### Hands-on: Correlation between samples
 >
-> 1. Find the `bigwig` files in the `data` directory.
+> 1. Find the `bigwig` files (wit extension `.bw`) in the `EpiSyStem_Workshop_Files` directory.
 >
 > 2. Compare bigwigs using `multiBigwigSummary`
 >    - *"Sample order matters"*: `No`
