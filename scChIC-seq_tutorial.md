@@ -121,7 +121,7 @@ Mapping requires a database of the genome to which you are mapping. These files 
 > bwa mem ../references/Mus_musculus.GRCm38.dna_rm.primary_assembly.fa demultiplexedR1_10000rows.fastq.gz demultiplexedR2_10000rows.fastq.gz > demux_map.sam
 > ```
 >
-> The output file containing all the mapping information is a `sam` file (in the example above, we gave it the name `demux_map.sam`, but you can change it an give it another name). 
+> The output file containing all the mapping information is a `sam` file (in the example above, we gave it the name `demux_map.sam`, but you can change it an give it another name). An explanation of  the SAM format can be found ([HERE](https://en.wikipedia.org/wiki/SAM_%28file_format%29)).
 > 
 > 2. Inspect the reference file, which can be found in `Handouts/EpiSyStem_Workshop_Files/references` with the name `Mus_musculus.GRCm38.dna_rm.primary_assembly.fa`. 
 > There is another command line, `grep`, which is very usefull to find string patterns in your files. Using the `cd` command, go to the `Handouts/EpiSyStem_Workshop_Files/references` directory, and type there:
@@ -135,18 +135,37 @@ Mapping requires a database of the genome to which you are mapping. These files 
 >
 >    > ### Questions
 >    >
->.   > Have a look at the first 67 lines of your `sam` file. What do you see? 
->.   > How do we see the length of each chromosome used in the mapping? 
->.   > Find all the lines in the `sam` file containing mapping information for the read with name  `Is:NS500414;RN:518;Fc:H2GV2BGX9;La:1;Ti:11101;CX:23815;CY:1073;Fi:N;CN:0;aa:CACTCA;aA:CACTCA;aI:32;LY:PZ-BM-m1-H3K4me1-2_H2GV2BGX9_S11;RX:CCT;RQ:GGG;BI:175;bc:TGCTAATG
-;BC:TGCTAATG;QT:GGKKKKKK;MX:NLAIII384C8U3`. What is each line? Where has this read been mapped? Which is the quality of the mapping? Help: Have a look at this line that explains the SAM format: ([binary of Sequence Alignment/Map](https://en.wikipedia.org/wiki/SAM_%28file_format%29)).
->    > How many reads where mapped? Uniquely or several times?
+>    > Have a look at the first 67 lines of your `sam` file. What do you see? 
+>    > How do we see the length of each chromosome used in the mapping? 
+>    > Find all the lines in the `sam` file containing mapping information for the read with name  `Is:NS500414;RN:518;Fc:H2GV2BGX9;La:1;Ti:11101;CX:23815;CY:1073;Fi:N;CN:0;aa:CACTCA;aA:CACTCA;aI:32;LY:PZ-BM-m1-H3K4me1-2_H2GV2BGX9_S11;RX:CCT;RQ:GGG;BI:175;bc:TGCTAATG;BC:TGCTAATG;QT:GGKKKKKK;MX:NLAIII384C8U3`. What is each line? Where has this read been mapped? Which is the quality of the mapping? Help: visit this ([link](https://en.wikipedia.org/wiki/SAM_%28file_format%29))
+>    > Now have a look at the mapping information for read `Is:NS500414;RN:518;Fc:H2GV2BGX9;La:1;Ti:11101;CX:23241;CY:4823;Fi:N;CN:0;aa:CACTCA;aA:CACTCA;aI:32;LY:PZ-BM-m1-H3K4me1-2_H2GV2BGX9_S11;RX:ACA;RQ:GGG;BI:175;bc:TGCTAATG;BC:TGCTAATG;QT:GGKKKKKK;MX:NLAIII384C8U3`. Is it mapped? Where? What is the quality of the mapping? 
 >    >
 
+## SAMTOOLS
 
-## Inspection of a BAM file
+The `sam` file is so important that is has a command line on its own to speed up its inspection. This is `samtools`. First, let's type `samtools` in the terminal with no arguments: a summary of all the options will be displayed. 
 
-Anna TODO Add more things to inspect.
+> We will first inspect the `flagstat` option: 
+> ```bash
+> samtools flagstat demux_map.sam
+> ```
+> > ### Questions
+> > What is the output telling us? 
+> > How many pair reads are mapped to the same chromosome in `demux_map.sam`? 
+> > How many reads are not mapped at all?
+> > In how many pair reads only one of the reads is mapped? 
 
+> We will now inspect the `view` option: 
+> ```bash
+> samtools flagstat demux_map.sam
+> ```
+> What is the output telling us? 
+
+
+   
+
+
+## From SAM to BAM format
 
 ## Correlation between samples
 
