@@ -228,14 +228,11 @@ In this tutorial we are interested in assessing H3K4me3 and H3K4me1 scChIC-seq s
 >    - *"Correlation method"*: `Pearson` or `Spearman` (which do you think is more appropriate here? Check by inspecting the scatterplots)
 >    - Plot `heatmap` or `scatterplot`.
 >    - In the scater plot, you can plot output in log scale (--log1p) for visualization. What happens if you do not use this option?
+> 
 > You can visualize the output by using the command `open` in the terminal. To go back to the terminal, select the corresponding tab in the top of your screen. 
 >    
-
-> ### Questions
->
-> From the correlation plot, can you infer which clusters correspond to the same cell type in H3K4me1 and H3K4me3?
->
->  
+> > ### Questions
+> > - From the correlation plot, can you infer which clusters correspond to the same cell type in H3K4me1 and H3K4me3?>  
 
 # Step 4: Exploring `bam` and `bigwig` files on the IGV browser
 
