@@ -111,13 +111,12 @@ We obtain sequences corresponding to a portion of DNA linked to the histone mark
 
 Mapping requires a database of the genome to which you are mapping. These files often are downloaded from publicly available genome browsers such as [Ensembl](https://www.ensembl.org/index.html) or [UCSC Genome Browser](https://genome-euro.ucsc.edu). We have already downloaded the mouse genome (genome assembly `mm10`) and created an index used for mapping. The index file is used often in mapping programs to allow fast and efficient access to the large genome. 
 
+`bwa` is a widely used software that allows to map reads in a `fastq` file to their most likely position in a reference genome or reference transcriptome. This software is called as any other termianl command. If you type `bwa` alone in the termnal you will see a list of options that you can use to run it and perform the mapping. In this tutorial we will use the option `mem`. Now, if you type `bwa mem` in the terminal, a new list of options will be displayed on screen. 
+
 > ### Hands-on: Mapping
 >
 > 1. Run `bwa` on the fastq files, using an mm10 reference genome.
->
->
-> `bwa mem -t 1 ../references/Mus_musculus.GRCm38.dna_rm.primary_assembly.fa demultiplexedR1_10000rows.fastq.gz demultiple
-xedR2_10000rows.fastq.gz | samtools view -b - > demux_map.bam`
+> 
 > `bwa mem -t 1 ../references/Mus_musculus.GRCm38.dna_rm.primary_assembly.fa demultiplexedR1_10000rows.fastq.gz demultiple
 xedR2_10000rows.fastq.gz > demux_map.sam`
 >
