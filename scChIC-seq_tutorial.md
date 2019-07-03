@@ -30,6 +30,7 @@ Contributors:
     
 Software needed (hopefully already installed):
 
+- CoCalc computing environment (please see `cocalc_manual.pdf` for instructions)
 - fastqc
 - samtools
 - deeptools
