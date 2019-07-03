@@ -55,9 +55,9 @@ Binding certain proteins to each of the eight histone proteins may modify the ch
 
 In the upcoming tutorial, we will look at the activator marks H3K4me1 and H3K4me3 scChIC-seq data from mouse bone marrow. We have already performed a dimensionality reduction ([using a method called Latent Dirichlet Allocation](https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation)) on the scChIC-seq in order to cluster cells ([using a method called Louvain community detection](https://en.wikipedia.org/wiki/Louvain_modularity)) with similar histone modification profiles.  The cell-cell relationships calculated from this analysis can be visualized in a 2-dimensional plot: 
 
-![R2 per base seq content](images/H3K4me1_umap.png)
+![H3K4me1 2D summary plot of cell-cell relationships. Colors and labels show different clusters of cells, inferred from Louvain algorithm.](images/H3K4me1_umap.png)
 
-![R2 per base seq content](images/H3K4me3_umap.png)
+![H3K4me3 2D summary plot of cell-cell relationships. Colors and labels show different clusters of cells, inferred from Louvain algorithm.](images/H3K4me3_umap.png)
 
 We will use this pre-defined clustering to explore scChIC-seq data. We suspect that the differences across cells could be coming from distinct cell types. In this exercise, we will focus on two clusters for each histone mark: for H3K4me1 clusters 2 and 5; for H3K4me3 clusters 3 and 5. We have already prepared the scChIC-seq data such that the individual cells are grouped into three clusters. Your job is to infer which cluster corresponds to which cell type.
 
