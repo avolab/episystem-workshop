@@ -47,7 +47,7 @@ To download IGV, go to the [IGV website](https://software.broadinstitute.org/sof
 
 *NOTE: IGV is a pre-built binary that runs on [Java](https://www.java.com/en/download/). You should already have Java installed on your system. In case it's not installed/updated (error while executing IGV), please visit the Java download page and install Java.*
 
-Running IGV can be simply started (without installation) by double-clicking on the downloaded file.
+Running IGV can be simply started (without installation) by double-clicking on the downloaded file for MAC and linux. For, windows, we can install the file using *.exe* file and execute it from the "programs" menu.
 
 # Introduction
 
