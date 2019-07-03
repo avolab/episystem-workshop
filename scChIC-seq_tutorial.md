@@ -107,6 +107,7 @@ During sequencing, errors are introduced, such as incorrect nucleotides being ca
 
 > ### Hands-on: Quality control
 >
+> 0. Rename the `fastq` files to `H3K4me3_demultiplexedR1_10000rows.fastq.gz` and `H3K4me3_demultiplexedR1_10000rows.fastq.gz`. 
 > 1. Run **FastQC** on the fastq files
 >    - `fastqc H3K4me3_demultiplexedR1_10000rows.fastq.gz` and `fastqc H3K4me3_demultiplexedR2_10000rows.fastq.gz`
 > 2. Inspect the generated HTML files. To do so, run the command `open demultiplexedR1_10000rows_fastqc.html` and Enable the view.
