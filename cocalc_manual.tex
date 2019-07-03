@@ -1,0 +1,184 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper]{geometry}
+\usepackage{hyperref, graphicx}
+
+\begin{document}
+\section*{Creating a CoCalc account}
+
+\begin{enumerate}
+\item Go to:
+
+\href{https://cocalc.science.uu.nl}{\texttt{https://cocalc.science.uu.nl}}
+
+\item Click to ``Start CoCalc For Free''
+
+\item Enter the following token:
+
+\texttt{UXCa4oFVm6dvJGmtz0rrYN6GWFNL78an0u7cOYw1fPjMK}
+
+\item Provide your personal details and sign up
+
+\item Share your personal details (email) with the instructors and we will add you to our project. 
+
+\end{enumerate}
+
+\section*{Introduction to the terminal}
+
+Once you join the project you will be in your home directory, which looks like this:
+\includegraphics[width=14cm]{home_dir.png}
+
+Go inside the ``\texttt{Handouts}'' directory and click on the ``\texttt{terminal.term}'' file. 
+
+\textbf{Welcome to the Terminal!}
+
+Before we proceed with the workshop, we will get ourselves familiarized with the terminal and some basic commands. 
+
+\begin{itemize}
+\item \texttt{pwd}
+
+As you know, files in a computer are organized inside directories. If you write \texttt{pwd} in the terminal, the address of your working directory will be printed on screen (\texttt{pwd} stands for ``\texttt{path of working directory}'').
+
+\item \texttt{ls}
+
+The ``\texttt{ls}'' command stands for ``\texttt{list}''. Therefore, if you type \texttt{ls} in the command line you will see a list of all the contents in this directory. This might be text files, directories, programs, etc. Usually, files are shown in black, directories in bold blue, and programs in bold read. However, there is not a standard for this. 
+
+\item \texttt{head / tail}
+
+If everything went ok, in the working directory there is a file named ``\texttt{files\_barcodes.txt}''. Type the following text in the terminal: 
+
+\begin{verbatim}
+head files_barcodes.txt
+\end{verbatim}
+
+This command prints down the first 10 lines of the file on the screen. If you print:
+
+\begin{verbatim}
+head -100 files_barcodes.txt
+\end{verbatim}
+
+the first 100 lines will be printed. 
+
+\vspace{1em}
+\hrulefill
+
+$\Rightarrow$ Run the same two instructions, but changig the command  \texttt{head} by the command tail\texttt{tail}. What does \texttt{tail} do?
+
+\hrulefill
+\vspace{1em}
+
+
+\item \texttt{cat}
+
+If you now type:
+
+\begin{verbatim}
+cat files_barcodes.txt
+\end{verbatim}
+, all the contents of the file will be printed on your screen. Be careful with very big files because the command will be printing on screen for a while! Additionally, we will see later how this command does not work in binary files. 
+
+\item \texttt{wc}
+
+This command stands for ``\texttt{word count}'', and it counts the number of lines, words and bytes in a file (in this order). Therefore, when you write the following in the terminal:
+\begin{verbatim}
+wc files_barcodes.txt
+\end{verbatim}
+you will find out how many lines are in this file. 
+
+\vspace{1em}
+\hrulefill
+
+$\Rightarrow$ What are the contents of the file \texttt{file\_text.txt}?
+
+$\Rightarrow$ How many does the file \texttt{file\_text.txt} have?
+
+\hrulefill
+\vspace{1em}
+
+\item \texttt{cd}
+
+The ``\texttt{cd}'' command stands for ``\texttt{change directory}''. Therefore, if you write:
+
+\begin{verbatim}
+cd EpiSyStem_Workshop_Files
+\end{verbatim}
+
+, your working directory is changed to a new one. 
+
+\vspace{1em}
+\hrulefill
+
+$\Rightarrow$ What is your working directory right now?
+
+$\Rightarrow$ What are the contents of your working directory?
+
+\hrulefill
+\vspace{1em}
+
+Now write:
+
+\begin{verbatim}
+cd ..
+\end{verbatim}
+
+\vspace{1em}
+\hrulefill
+
+$\Rightarrow$ What is your working directory right now?
+
+$\Rightarrow$ Take your time now to ``travel'' around the different directories and check the contents of your files. 
+
+\hrulefill
+\vspace{1em}
+
+\item \texttt{less}
+
+Go to the \texttt{/Handouts/EpiSyStem\_Workshop\_Files/fastq\_raw} folder. There, you should find two files named ``\texttt{raw\_fastq\_R1.fastq}'' and ``\texttt{raw\_fastq\_R2.fastq}''. Even though all the commands you have learned so far are very powerful to explore the contents of these \texttt{fastq} files, the command \texttt{less} will allow you to navigate inside the file without editing it. Type in the terminal:
+\begin{verbatim}
+less raw_fastq_R1.fastq
+\end{verbatim}
+and explore with the arrows (up \& down) the file. To quit the viewing, press ``\texttt{q}''.
+
+\vspace{1em}
+\hrulefill
+
+$\Rightarrow$ How many lines are in these two \texttt{fastq} files?
+
+$\Rightarrow$ How many reads are in these two \texttt{fastq} files?
+
+$\Rightarrow$ What is the name of the read number 23 in both fastq files? 
+
+$\Rightarrow$ What is the sequence of the read number 23 in both fastq files? 
+
+$\Rightarrow$ Which is the UMI and the cell-specific barcode of read number 23?
+
+\hrulefill
+\vspace{1em}
+
+\end{itemize}
+
+There are A LOT of bash commands, all of them very useful to explore files, copy and move them around, to select only some columns, etc. 
+To learn more, you can go here: 
+
+\href{http://bioinformatics.mdc-berlin.de/intro2UnixandSGE/unix_for_beginners/README.html}{\texttt{http://bioinformatics.mdc-berlin.de/intro2UnixandSGE/unix\_for\_beginners/README.html}}
+
+Additionally, if you want to learn more about the commands that we introduced here, type the following instruction in the terminal: 
+
+\texttt{command --help}
+
+and a manual for the specifiec command will be printed on screen. Try in out, for instance, by typing \texttt{ls --help}.
+
+
+
+\section*{Setting up the CoCalc account for our exercices}
+
+Before proceding with our workshop, type this set of commands in the terminal:
+
+\begin{verbatim}
+BASEDIR=$(echo `pwd` | cut -d '/' -f 1-3)
+source ${BASEDIR}/setup/guix-profile/etc/profile
+export PATH="$HOME/Handouts/hiddenDomains:$PATH"
+\end{verbatim}
+
+\textbf{You are ready to start the scChIC-seq workshop!}
+
+\end{document}
