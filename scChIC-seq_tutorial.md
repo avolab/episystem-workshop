@@ -30,7 +30,7 @@ Contributors:
     
 Software needed (hopefully already installed):
 
-- CoCalc computing environment (please see `cocalc_manual.pdf` for instructions)
+- CoCalc computing environment (please see `cocalc_manual.pdf` for instructions found on https://github.com/avolab/episystem-workshop)
 - fastqc
 - samtools
 - deeptools
