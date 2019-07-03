@@ -258,7 +258,7 @@ In this tutorial we are interested in assessing H3K4me3 and H3K4me1 scChIC-seq s
 > 3. Check results using `plotCorrelation`. Remember that you can type `plotCorrelation --help` in the terminal to see the list of options. Use to following parameters to explore the file `results.npz`:
 >    - "Correlation method": `Pearson` or `Spearman` (which do you think is more appropriate here? Check by inspecting the scatterplots)
 >    - Plot `heatmap` or `scatterplot`.
->    - In the scatter plot, you can plot output in log scale (--log1p) for visualization. What happens if you do not use this option?
+>    - In the scatter plot, you can plot output in log scale (`--log1p`) for visualization. What happens if you do not use this option?
 >
 > You can visualize the output by using the command `open` in the terminal. To go back to the terminal, select the corresponding tab in the top of your screen with the mouse.
 >    
