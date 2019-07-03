@@ -139,7 +139,8 @@ Mapping requires a database of the genome to which you are mapping. These files 
 > ```
 > bwa mem ../references/Mus_musculus.GRCm38.dna_rm.primary_assembly.fa \
 > demultiplexedR1_10000rows.fastq.gz demultiplexedR2_10000rows.fastq.gz \
-> -o demux_map.sam```
+> -o demux_map.sam
+> ```
 >
 > The output file containing all the mapping information is a `sam` file (in the example above, we gave it the name `demux_map.sam`, but you can change it an give it another name). An explanation of  the SAM format can be found on [wikipedia](https://en.wikipedia.org/wiki/SAM_%28file_format%29).
 >
