@@ -62,10 +62,19 @@ In the upcoming tutorial, we will look at the activator marks H3K4me1 and H3K4me
 
 We will use this pre-defined clustering to explore scChIC-seq data. We suspect that the differences across cells could be coming from distinct cell types. In this exercise, we will focus on two clusters for each histone mark: for H3K4me1 clusters 2 and 5; for H3K4me3 clusters 3 and 5. We have already prepared the scChIC-seq data for you such that the individual cells are grouped into three clusters. Your job is to infer which cluster corresponds to which cell type.
 
-Overview of files provided in this tutorial:
+# Step 0: Checking the files
+
+## File formats
+Below are the file-formats you will have to deal with in a typical "Seq" data analysis.
+
+![](images/intro_formats.png)
+
+## Overview of files provided in this tutorial:
 
 All file paths are relative to the data directory: `$HOME/Handouts/EpiSyStem_Workshop_Files`
 Remember you can navigate around the directories using `cd` and explore the files present in each direction using `ls`.
+
+*NOTE: ${variable} represents a bash variable*
 
 - `fastq_raw/raw_fastq_R${read}.fastq` : raw `fastq` files to see what raw data looks like before demultiplexing. You already had a look at these in the previous tutorial. `${read}` denotes a bash variable that in this case can be equal to either 1 or 2.
 - `fastq_full/demultiplexedR${read}_10000rows.fastq.gz` : demultiplexed `fastq` files for quality control checks before mapping. Again, `${read}` is a bash variable equal to 1 or 2. Note that this fastq files are zipped.
@@ -74,12 +83,6 @@ Remember you can navigate around the directories using `cd` and explore the file
 - `regions/regions_to_filter.txt` : File containing the four genomic regions that contain signal in the `bam` files.
 - `sorted_bigwigs/${hmark}_cluster_${clstrID}.bw` : `bigwig` files of scChIC-seq profiles, providing genome-wide coverage of scChIC-seq grouped by their clusters (pseudobulk). We will use `bigwig` files to correlate across pseudobulk samples and visualize the on the `IGV`.
 - `chromsizes/chromsizes.${genome}.filt.txt` : size of genomes which are used as input in `hiddenDomains`.
-
-## File formats
-
-Below are the file-formats you will have to deal with in a typical "Seq" data analysis.
-
-![](images/intro_formats.png)
 
 
 # Step 1: Quality control and treatment of the sequences
