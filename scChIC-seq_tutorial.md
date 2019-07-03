@@ -29,7 +29,7 @@ Contributors:
 - Peter Zeller
 
 
-*The document has been adopted from the [galaxy training material](training.galaxyproject.org)*
+The document has been adopted from the [galaxy training material](training.galaxyproject.org)
 
 Software needed (hopefully already installed):
 
@@ -42,13 +42,11 @@ Software needed (hopefully already installed):
 - R
 - perl
 - python
-=======
 
 Software and computing environments needed:
 
 - CoCalc computing environment (please see `cocalc_manual.pdf` for instructions found on `https://github.com/avolab/episystem-workshop`)
 - IGV genome browser (`http://software.broadinstitute.org/software/igv/download`)
->>>>>>> 8622d854f6062f3e4d35c20a0b023387334a41e6
 
 # Introduction
 
