@@ -27,7 +27,8 @@ Contributors:
 - Alexander van Oudenaarden
 - Jake Yeung
 - Peter Zeller
-*The structure has been adopted from the [galaxy training material](training.galaxyproject.org)*
+
+*The document has been adopted from the [galaxy training material](training.galaxyproject.org)*
 
 Software needed (hopefully already installed):
 
