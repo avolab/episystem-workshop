@@ -41,14 +41,6 @@ Software needed (hopefully already installed):
 - perl
 - python
 
-**Before you begin: Installing IGV**
-
-To download IGV, go to the [IGV website](https://software.broadinstitute.org/software/igv/) and then to the "downloads" page.
-
-*NOTE: IGV is a pre-built binary that runs on [Java](https://www.java.com/en/download/). You should already have Java installed on your system. In case it's not installed/updated (error while executing IGV), please visit the Java download page and install Java.*
-
-Running IGV can be simply started (without installation) by double-clicking on the downloaded file for MAC and linux. For, windows, we can install the file using *.exe* file and execute it from the "programs" menu.
-
 # Introduction
 
 Within a cell nucleus, the DNA is tightly-packed and the chromatin is spatially distributed with different levels and scales of organizations. At the smallest scale, DNA is packaged into units called nucleosomes, made of eight histone proteins.
@@ -81,6 +73,12 @@ Remember you can navigate around the directories using `cd` and explore the file
 - `regions/regions_to_filter.txt` : File containing the four genomic regions that contain signal in the `bam` files.
 - `sorted_bigwigs/${hmark}_cluster_${clstrID}.bw` : `bigwig` files of scChIC-seq profiles, providing genome-wide coverage of scChIC-seq grouped by their clusters (pseudobulk). We will use `bigwig` files to correlate across pseudobulk samples and visualize the on the `IGV`.
 - `chromsizes/chromsizes.${genome}.filt.txt` : size of genomes which are used as input in `hiddenDomains`.
+
+## File formats
+
+Below are the file-formats you will have to deal with in a typical "Seq" data analysis.
+
+![](images/intro_formats.png)
 
 
 # Step 1: Quality control and treatment of the sequences
@@ -237,15 +235,15 @@ In this tutorial we are interested in assessing H3K4me3 and H3K4me1 scChIC-seq s
 >
 > 1. Find the `bigwig` files (wit extension `.bw`) in the `EpiSyStem_Workshop_Files` directory. You should find two files for each chromatin modification (H3K4me1 clusters 2 and 5; for H3K4me3 clusters 3 and 5).
 >
-> 2. Compare all bigwigs using `multiBigwigSummary`. You can type `multiBigwigSummary` in the terminal to see all the options. We will use the following options:
->    - "Choose computation mode": `Bins`
->    - "Bin size in bp": `100000`
->    - "Input bigwig files": the four imported `bigwig` files
->    - "Output file": `results.npz`
+> 2. Compare all bigwigs using `multiBigwigSummary`. You can type `multiBigwigSummary --help` in the terminal to see all the options. We will use the following options:
+>    - (Choose computation mode) `bins`
+>    - (Bin size in bp) `-bs 100000`
+>    - (Input bigwig files): the four imported `-bw <bigwig>` files
+>    - (Output file): `-o results.npz`
 >
 >    Using these parameters, the tool will take bins of 100000 bp. For each bin the overlapping reads in each sample will be computed and stored into a matrix.
 >
-> 3. Check results using `plotCorrelation`. Remember that you can type `plotCorrelation` by itself in the terminal to see the list of options. Use to following parameters to explore the file `results.npz`:
+> 3. Check results using `plotCorrelation`. Remember that you can type `plotCorrelation --help` in the terminal to see the list of options. Use to following parameters to explore the file `results.npz`:
 >    - "Correlation method": `Pearson` or `Spearman` (which do you think is more appropriate here? Check by inspecting the scatterplots)
 >    - Plot `heatmap` or `scatterplot`.
 >    - In the scatter plot, you can plot output in log scale (--log1p) for visualization. What happens if you do not use this option?
