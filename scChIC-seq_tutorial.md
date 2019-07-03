@@ -250,7 +250,7 @@ In this tutorial we are interested in assessing H3K4me3 and H3K4me1 scChIC-seq s
 > 2. Compare all bigwigs using `multiBigwigSummary`. You can type `multiBigwigSummary --help` in the terminal to see all the options. We will use the following options:
 >    - (Choose computation mode) `bins`
 >    - (Bin size in bp) `-bs 100000`
->    - (Input bigwig files): the four imported `-bw <bigwig>` files
+>    - (Input bigwig files): the four imported `-b <bigwig>` files
 >    - (Output file): `-o results.npz`
 >
 >    Using these parameters, the tool will take bins of 100000 bp. For each bin the overlapping reads in each sample will be computed and stored into a matrix.
