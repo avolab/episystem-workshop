@@ -97,7 +97,7 @@ Let's first assess the quality of the demultiplexed `fastq` files. Demultiplexed
 
 > ### Hands-on: First look at the `fastq` files
 > 1. Using the terminal, go to the directory `Handouts/EpiSyStem_Workshop_Files/fastq_full`
-> 2. Inspect the `fastq` files by using the `less` command. What differences do you detect when comparing the reads in these files to the reads in the `fastq` files available in the `fastq_raw` directory?
+> 2. Inspect the `fastq` files by using the `less` command. What differences do you detect when comparing the reads in these files to the reads in the `fastq` files available in the `fastq_raw` directory? Hint you can add a `-N` flag (i.e., `less -N`) in order to show the line number explicitly. 
 > 3. Run the command `head` on any of the two files. What is the output? Why do you think this does not work?
 > 4. In order to explore `zipped` files, the `head/tail/cat` commands are not good enough. For this reason, there is the command `zcat` which has the same function as `cat` but only works with `zipped` files. Try it out by running the command `zcat demultiplexedR1_10000rows.fastq.gz`.
 >
