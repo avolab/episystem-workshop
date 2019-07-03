@@ -53,31 +53,31 @@ Binding certain proteins to each of the eight histone proteins may modify the ch
 ![Fadloun et al, 2013](images/histone_modifications.jpg "Source: Fadloun et al, 2013")
 
 
-In the upcoming tutorial, we will look at the activator marks H3K4me1 and H3K4me3 scChIC-seq data from mouse bone marrow. We have already performed a dimensionality reduction ([using a method called Latent Dirichlet Allocation](https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation)) on the scChIC-seq in order to cluster cells ([using a method called Louvain community detection](https://en.wikipedia.org/wiki/Louvain_modularity)) with similar histone modification profiles.  The cell-cell relationships calculated from this analysis can be visualized in a 2-dimensional plot: 
+In the upcoming tutorial, we will look at the activator marks H3K4me1 and H3K4me3 scChIC-seq data from mouse bone marrow. We have already performed a dimensionality reduction ([using a method called Latent Dirichlet Allocation](https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation)) on the scChIC-seq in order to cluster cells ([using a method called Louvain community detection](https://en.wikipedia.org/wiki/Louvain_modularity)) with similar histone modification profiles.  The cell-cell relationships calculated from this analysis can be visualized in a 2-dimensional plot (see Figure 2, Figure 3)
 
-![H3K4me1 2D summary plot of cell-cell relationships. Colors and labels show different clusters of cells, inferred from Louvain algorithm.](images/H3K4me1_umap.png)
+![H3K4me1 UMAP (Uniform Manifold Approximation and Projection) plot of cell-cell relationships. Colors and labels show different clusters of cells, inferred from Louvain algorithm.](images/H3K4me1_umap.png)
 
-![H3K4me3 2D summary plot of cell-cell relationships. Colors and labels show different clusters of cells, inferred from Louvain algorithm.](images/H3K4me3_umap.png)
+![H3K4me3 UMAP plot of cell-cell relationships. Colors and labels show different clusters of cells, inferred from Louvain algorithm.](images/H3K4me3_umap.png)
 
-We will use this pre-defined clustering to explore scChIC-seq data. We suspect that the differences across cells could be coming from distinct cell types. In this exercise, we will focus on two clusters for each histone mark: for H3K4me1 clusters 2 and 5; for H3K4me3 clusters 3 and 5. We have already prepared the scChIC-seq data such that the individual cells are grouped into three clusters. Your job is to infer which cluster corresponds to which cell type.
+We will use this pre-defined clustering to explore scChIC-seq data. We suspect that the differences across cells could be coming from distinct cell types. In this exercise, we will focus on two clusters for each histone mark: for H3K4me1 clusters 2 and 5; for H3K4me3 clusters 3 and 5. We have already prepared the scChIC-seq data for you such that the individual cells are grouped into three clusters. Your job is to infer which cluster corresponds to which cell type.
 
 Overview of files provided in this tutorial:
 
 All file paths are relative to the data directory: `$HOME/Handouts/EpiSyStem_Workshop_Files`
-Remember you can navigate around the diretctories using `cd` and explore the files present in each direction using `ls`. 
+Remember you can navigate around the directories using `cd` and explore the files present in each direction using `ls`. 
 
-- `fastq_raw/raw_fastq_R${read}.fastq` : raw `fastq` files to see what raw data looks like before demultiplexing. You already had a look at these in the previous tutorial. ${read} denotes a bash variable that in this case can be equal to either 1 or 2. 
+- `fastq_raw/raw_fastq_R${read}.fastq` : raw `fastq` files to see what raw data looks like before demultiplexing. You already had a look at these in the previous tutorial. `${read}` denotes a bash variable that in this case can be equal to either 1 or 2. 
 - `fastq_full/demultiplexedR${read}_10000rows.fastq.gz` : demultiplexed `fastq` files for quality control checks before mapping. Again, `${read}` is a bash variable equal to 1 or 2. Note that this fastq files are zipped. 
 - `references/Mus_musculus.GRCm38.dna_rm.primary_assembly.fa`: reference genome `fasta` file.
-- `sorted_bams_filtered/${histone_mark}_cluster_${clstrID}.filtered.bam` : single cell scChIC-seq profiles grouped by clusters. Here, `${histone_mark}` is either H3K4me1 or H3K4me3; and `${clstrID}` will be either 2, 5 or 11 for H3K4me1 and 3, 5 or 6 for H3K4me3. We have already assigned cells to clusters for you, you just have to infer the biological meaning of these clusters (i.e., infer the cell type). We will use these to visualize `bam` files with `IGV`, explore how to calculate number of reads by `MAPQ` quality, and do peak calling.  `bam` files are subset to include only four main regions to reduce file size (defined in `regions/regions_to_filter.txt`).
+- `sorted_bams_filtered/${hmark}_cluster_${clstrID}.filtered.bam` : single cell scChIC-seq profiles grouped by clusters. Here, `${hmark}` is either H3K4me1 or H3K4me3; and `${clstrID}` will be either 2, 5 or 11 for H3K4me1, and 3, 5 or 6 for H3K4me3. We have already assigned cells to clusters for you, you just have to infer the biological meaning of these clusters (i.e., infer the cell type). We will use these to visualize `bam` files with `IGV`, explore how to calculate number of reads by `MAPQ` quality, and do peak calling.  `bam` files are subset to include only four main regions in order to reduce file size (defined in `regions/regions_to_filter.txt`).
 - `regions/regions_to_filter.txt` : File containing the four genomic regions that contain signal in the `bam` files. 
-- `sorted_bigwigs/${histone_mark}_cluster_${clstrID}.bw` : `bigwig` files of scChIC-seq profiles, providing genome-wide coverage of scChIC-seq grouped by their clusters (pseudobulk). We will use `bigwig` files to correlate across pseudobulk samples and visualize the on the `IGV`.
+- `sorted_bigwigs/${hmark}_cluster_${clstrID}.bw` : `bigwig` files of scChIC-seq profiles, providing genome-wide coverage of scChIC-seq grouped by their clusters (pseudobulk). We will use `bigwig` files to correlate across pseudobulk samples and visualize the on the `IGV`.
 - `chromsizes/chromsizes.${genome}.filt.txt` : size of genomes which are used as input in `hiddenDomains`. 
 
 
 # Step 1: Quality control and treatment of the sequences
 
-Let's first assess the quality of the demultiplexed `fastq` files. Demultiplexed means UMI and cell barcodes have been clipped from the `fastq` file and placed in the header.
+Let's first assess the quality of the demultiplexed `fastq` files. Demultiplexed means UMI and cell barcodes have been clipped from the sequences in the original `fastq` file and placed in the header.
 
 > ### Hands-on: First look at the `fastq` files
 > 1. Using the terminal, go to the directory `Handouts/EpiSyStem_Workshop_Files/fastq_full`
@@ -88,7 +88,6 @@ Let's first assess the quality of the demultiplexed `fastq` files. Demultiplexed
 
 During sequencing, errors are introduced, such as incorrect nucleotides being called. These are due to the technical limitations of each sequencing platform. Sequencing errors might bias the analysis and can lead to a misinterpretation of the data.
 
-Sequence quality control is therefore an essential first step in your analysis. We use here similar tools as described in ["Quality control" tutorial]({{site.baseurl}}/topics/sequence-analysis): [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/). Interpretation of fastqc outputs can be found here [FastQC Output](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/).
 
 > ### Hands-on: Quality control
 >
@@ -107,20 +106,20 @@ Sequence quality control is therefore an essential first step in your analysis. 
 
 # Step 2: Mapping of the reads
 
-We obtain sequences corresponding to a portion of DNA linked to the histone mark of interest, H3K4me3 in this case. H3K4me3 is associated with active chromatin. It would be interesting to know if there is a difference across cell types.
+We obtain sequences corresponding to a portion of DNA linked to the histone mark of interest (e.g., H3K4me1, H3K4me3). The output file contains a list of sequences that need to be mapped to the genome for further analysis. After mapping, we can then ask whether there are cell-type specific differences in different genomic regions.
 
 ## Running BWA
 
 Mapping requires a database of the genome to which you are mapping. These files often are downloaded from publicly available genome browsers such as [Ensembl](https://www.ensembl.org/index.html) or [UCSC Genome Browser](https://genome-euro.ucsc.edu). We have already downloaded the mouse genome (genome assembly `mm10`) and created an index used for mapping. The index file is used often in mapping programs to allow fast and efficient access to the large genome. 
 
-`bwa` is a widely used software that allows to map reads in a `fastq` file to their most likely position in a reference genome or reference transcriptome. This software can be used as a command in the terminal. If you type `bwa` alone in the termnal you will see a list of options that you can use to run it and perform the mapping. In this tutorial we will use the option `mem`. Now, if you type `bwa mem` in the terminal, a new list of options will be displayed on screen. 
+`bwa` is a widely used software that allows to map reads in a `fastq` file to their most likely position in a reference genome or reference transcriptome. This software can be used as a command in the terminal. If you type `bwa` alone in the terminal you will see a list of options that you can use to run it and perform the mapping. In this tutorial we will use the option `mem`. Now, if you type `bwa mem` in the terminal, a new list of options will be displayed on screen. 
 
 > ### Hands-on: Mapping
 >
-> 1. Run `bwa` on the fastq files, using an mm10 reference genome (the forward slash `\` is only used to split a long single line into multiple lines, so the long command can be printed on a PDF page).
+> 1. Run `bwa` on the fastq files, using an `mm10` reference genome (the forward slash `\` is only used to split a long single line into multiple lines, so the long command can be printed on a PDF page).
 > 
 >
-> ```bash
+> ```
 > bwa mem ../references/Mus_musculus.GRCm38.dna_rm.primary_assembly.fa \
 > demultiplexedR1_10000rows.fastq.gz demultiplexedR2_10000rows.fastq.gz \
 > demux_map.sam```
@@ -131,7 +130,7 @@ Mapping requires a database of the genome to which you are mapping. These files 
 > 
 >   `Handouts/EpiSyStem_Workshop_Files/references` with the name `Mus_musculus.GRCm38.dna_rm.primary_assembly.fa`. 
 >
-> There is another command line, `grep`, which is very usefull to find string patterns in your files. Using the `cd` command, go to the `Handouts/EpiSyStem_Workshop_Files/references` directory, and type there:
+> There is another command line, `grep`, which is very useful to find string patterns in your files. Using the `cd` command, go to the `Handouts/EpiSyStem_Workshop_Files/references` directory, and type there:
 > ```bash 
 > grep '>' Mus_musculus.GRCm38.dna_rm.primary_assembly.fa
 > ```
@@ -153,7 +152,7 @@ Mapping requires a database of the genome to which you are mapping. These files 
 >    > LY:PZ-BM-m1-H3K4me1-2_H2GV2BGX9_S11;RX:CCT;RQ:GGG;BI:175;bc:\
 >    > TGCTAATG;BC:TGCTAATG;QT:GGKKKKKK;MX:NLAIII384C8U3
 >    > ```
->    > - What is each line? Help: visit this ([link](https://en.wikipedia.org/wiki/SAM_%28file_format%29))
+>    > - What is each line? Help: visit the wikipedia page `https://en.wikipedia.org/wiki/SAM_%28file_format%29`
 >    > - Where has this read been mapped? 
 >    > - Which is the quality of the mapping? 
 >    > 
@@ -197,13 +196,14 @@ The `sam` file is so important that is has a command line on its own to speed up
 > samtools view 
 > ```
 > a full list of new options is displayed. Answer the following questions using `samtools view` with the different options. You might need to pipe some commands to get the answer. 
-> > ### Questions
-> > - How many reads do have the flag 99? 
-> > - How many reads do not have the flag 99?
-> > - How many reads do have a mapping quality equal or higher than 60?
-> > - List the first 5 reads that have a mapping quality equal or higher than 60 with a flag equal to 163. 
-> > - Print the SAM header only. 
-> > - How many reads with a mapping quality equal or higher than 60 do have the string `BC:CGTAGTGC` in their name? 
+>
+### Questions
+  - How many reads do have the flag 99? 
+  - How many reads do not have the flag 99?
+  - How many reads do have a mapping quality equal or higher than 60?
+  - List the first 5 reads that have a mapping quality equal or higher than 60 with a flag equal to 163. 
+  - Print the SAM header only. 
+  - How many reads with a mapping quality equal or higher than 60 do have the string `BC:CGTAGTGC` in their name (BC stands for cell barcode)? 
 
 ## From SAM to BAM format
 
@@ -221,9 +221,9 @@ samtools view demux_max.bam | head
 
 We will compare genome-wide correlation of H3K4me3 and H3K4me1 for different cell clusters.
 
-To compute the correlation between the samples we are going to to use the QC modules of [deepTools](http://deeptools.readthedocs.io/), a software package for the QC (quality check), processing and analysis of NGS data. Before computing the correlation a time consuming step is required, which is to compute the read coverage (number of unique reads mapped at a given nucleotide) over a large number of regions from each of the inputed BAM files. For this we will use the tool **multiBamSummary** . Then, we use **plotCorrelation**  from deepTools to compute and visualize the sample correlation. This is a fast process that allows to quickly try different correlation methods and visual outputs.
+To compute the correlation between the samples we are going to to use the QC modules of `deepTools` (http://deeptools.readthedocs.io/), a software package for the QC (quality check), processing and analysis of NGS data. Before computing the correlation a time consuming step is required, which is to compute the read coverage (number of unique reads mapped at a given nucleotide) over a large number of regions from each of the inputed BAM files. For this we will use the tool **multiBamSummary** . Then, we use **plotCorrelation**  from `deepTools` to compute and visualize the sample correlation. This is a fast process that allows to quickly try different correlation methods and visual outputs.
 
-In this tutorial we are interested in assessing H3K4me3 and H3K4me1 scChIC-seq samples. To save time, we have already done that and summarized the scChIC-seq data as bigwig files, which contains the read coverage.
+In this tutorial we are interested in assessing H3K4me3 and H3K4me1 scChIC-seq samples. To save time, we have already converted the `bam` to `bigwig` files, which contains the read coverage.
 
 > ### Hands-on: Correlation between samples
 >
@@ -233,28 +233,28 @@ In this tutorial we are interested in assessing H3K4me3 and H3K4me1 scChIC-seq s
 >    - "Choose computation mode": `Bins`
 >    - "Bin size in bp": `100000`
 >    - "Input bigwig files": the four imported `bigwig` files
->    - "Output file": results.npz
+>    - "Output file": `results.npz`
 >
 >    Using these parameters, the tool will take bins of 100000 bp. For each bin the overlapping reads in each sample will be computed and stored into a matrix.
 >
-> 4. Check results using `plotCorrelation`. Remember that you can type `plotCorrelation` by itself in the terminal to see the list of options. Use to following parameters to explore the file `results.npz`:
+> 3. Check results using `plotCorrelation`. Remember that you can type `plotCorrelation` by itself in the terminal to see the list of options. Use to following parameters to explore the file `results.npz`:
 >    - "Correlation method": `Pearson` or `Spearman` (which do you think is more appropriate here? Check by inspecting the scatterplots)
 >    - Plot `heatmap` or `scatterplot`.
 >    - In the scatter plot, you can plot output in log scale (--log1p) for visualization. What happens if you do not use this option?
 > 
-> You can visualize the output by using the command `open` in the terminal. To go back to the terminal, select the corresponding tab in the top of your screen. 
+> You can visualize the output by using the command `open` in the terminal. To go back to the terminal, select the corresponding tab in the top of your screen with the mouse. 
 >    
 > > ### Questions
 > > - From the correlation plot, can you infer which clusters correspond to the same cell type in H3K4me1 and H3K4me3?
 
 # Step 4: Exploring `bam` files on the IGV browser
 
-Now, go to the directory `EpiSyStem_Workshop_Files/sorted_bams_filtered`, which contains a 6 different `bam` files. These files have been prepared by the instructors and only contain only reads falling in specific genomic regions, in order to reduce the file size. 
+Now, go to the directory `EpiSyStem_Workshop_Files/sorted_bams_filtered`, which contains a 6 different `bam` files. These files have been prepared by the instructors and only contain reads falling in specific genomic regions, in order to reduce the file size. 
 For each modification, we have clustered single cells into three separate `bam` files, associated with one of three cell types: erythroblast, granulocytes, and B-cells. Your job is to explore which `bam` file is associated with which cell type by looking at cell-type specific regions in the genome browser. 
 
-Download the `.bam` and `.bam.bai` files onto your computer (`.bam.bai` files are important for hte IGV browser to be able to read the contents of the `bam` file). In order to download the files, select with your mouse the `Files` tab, go to the `EpiSyStem_Workshop_Files/sorted_bams_filtered` folder, select all the files present and create a zip folder. Next, download the zip folder onto yoru computer and unzip it. 
+Download the `.bam` and `.bam.bai` files onto your computer (`.bam.bai` files are indexes used by the IGV browser to quickly read the contents of the `bam` file). In order to download the files, select with your mouse the `Files` tab, go to the `EpiSyStem_Workshop_Files/sorted_bams_filtered` folder, select all the files present and create a zip folder. Next, download the zip folder onto your computer and unzip it. 
 
-Open first the 3 `bam` files belonging to the modification H3K4me1 using IGV, which should already be installed on your computer. And explore the following cell-type specific regions:
+Open first the 3 `bam` files belonging to the modification H3K4me1 using IGV, which should already be installed on your computer. Explore the following cell-type specific regions:
 ```
 chr7    114972165       116898716
 chr7    103325741       104425479
@@ -266,7 +266,7 @@ chr11   44114099        45269522
 > ### Questions:
 > 1. Can you infer which clusters correspond to which cell types based on the coverage around the four regions?
 > 
-> Hint: *Hbb* is a standard marker for erythroblast, *S100a8* is a standard marker for granulocytes, and *Ebf1* is a standard markers for B cells.
+> Hint: *Hbb* is a standard marker for erythroblast, *S100a8* is a standard marker for granulocytes, and *Ebf1* is a standard marker for B cells.
 
 Repeat the same procedure with the modification H3K4me3. 
 
@@ -281,11 +281,11 @@ Go back to CoCalc, and using the terminal go to the directory (in case you are n
 
 > ###  Hands-on: Peak calling with  `hiddenDomains`
 >
-> 1. Calling peaks with `hiddenDomains`. Remember you can write `hiddenDomains` by itself in the terminal and a list of options will be shown. You can also find more information [here](http://hiddendomains.sourceforge.net). For now, we need the following required inputs: 
+> 1. Calling peaks with `hiddenDomains`. Remember you can write `hiddenDomains` by itself in the terminal and a list of options will be shown. You can also find more information on their website (http://hiddendomains.sourceforge.net). For now, we need the following required inputs: 
 
 >	-  -g Size of chromosomes for the mouse genome. Can you find this file?
 
->	-  -q Minimum MAPQ score. What is an appropriate MAPQ score to use? A low MAPQ score may include reads that are poor quality, while high MAPQ score keeps only high quality reads. For now, we will keep reads with a quality threshold equal to 60.
+>	-  -q Minimum MAPQ score. A low MAPQ score may include reads that are poor quality, while high MAPQ score keeps only high quality reads. For now, we will keep reads with a quality threshold equal to 60.
 
 >   -  -p A threshold to remove domains called with probabilities less than `p`. Set to a value such as 0.5. You can play around with this value to see how it changes the output.
 
@@ -297,7 +297,7 @@ Go back to CoCalc, and using the terminal go to the directory (in case you are n
 >    > 1. Which type of files were generated? What do they include?
 >    > 2. How do the peaks called differ between samples? Can you infer cell types based on this analysis? 
 >    >
-> 2. Download all the `BED` files that have been produced by `hiddenDomains` in your computer and open them using `IGV`. For that, you need to go the tab `Files` in the top of your screen with your mouse, and navigate throught the directories until you find the `BED` files. Once there, select them, create a compress folder, and download that folder onto your computer. In your computer, you can unzip the folder and load the files in `IGV`. 
+> 2. Download all the `BED` files that have been produced by `hiddenDomains` in your computer and open them using `IGV`. For that, you need to go the tab `Files` in the top of your screen with your mouse, and navigate throught the directories until you find the `BED` files. Once there, select them, create a compressed folder, and download that folder onto your computer. In your computer, you can unzip the folder and load the files in `IGV`. 
 
 >    > ### Questions
 >    > 1. How do the cell-type specific regions look like?
