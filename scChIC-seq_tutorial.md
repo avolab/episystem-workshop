@@ -28,9 +28,10 @@ Contributors:
 - Jake Yeung
 - Peter Zeller
     
-Software needed (hopefully already installed):
+Software and computing environments needed:
 
 - CoCalc computing environment (please see `cocalc_manual.pdf` for instructions found on `https://github.com/avolab/episystem-workshop`)
+- IGV genome browser (`http://software.broadinstitute.org/software/igv/download`)
 
 
 # Introduction
