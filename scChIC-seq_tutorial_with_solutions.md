@@ -48,6 +48,10 @@ Software and computing environments needed:
 - CoCalc computing environment (please see `cocalc_manual.pdf` for instructions found on `https://github.com/avolab/episystem-workshop`)
 - IGV genome browser (`http://software.broadinstitute.org/software/igv/download`)
 
+Accessing files associated with this workshop:
+
+- Link to files: https://zenodo.org/record/3256650#.XR79iC2B13Q
+
 # Introduction
 
 Within a cell nucleus, the DNA is tightly-packed and the chromatin is spatially distributed with different levels and scales of organizations. At the smallest scale, DNA is packaged into units called nucleosomes, made of eight histone proteins.
